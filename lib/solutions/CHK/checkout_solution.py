@@ -1,13 +1,23 @@
 import collections
 import dataclasses
 import re
+from enum import Enum
 from typing import Dict, Set, Callable
 
 
 @dataclasses.dataclass
 class Item:
     key: str
-    quantity: int
+    price: int
+    quantity: int = None
+
+
+class Items(Enum):
+    A = Item('A', 50)
+    B = Item('B', 30)
+    C = Item('C', 20)
+    D = Item('D', 15)
+    E = Item('E', 40)
 
 
 @dataclasses.dataclass
@@ -71,17 +81,8 @@ class Discount:
                self.free * total_discounts
 
 
-DISCOUNT_TABLE: Dict[int,Callable[[Basket],Basket]] = {
-    "A": [
-        Discount(price=50, discount_value=200, discount_meet_quantity=5),
-        Discount(price=50, discount_value=130, discount_meet_quantity=3),
-    ],
-    "B": Discount(price=30, discount_value=45, discount_meet_quantity=2),
-    "C": Discount(price=20),
-    "D": Discount(price=15),
-    "E": [
-        Discount(price=30, discount_value=45, discount_meet_quantity=2, free=['B']),
-    ],
+DISCOUNT_TABLE: List[(Dicount, Callable[[Basket], Basket])] = {
+
 }
 
 
@@ -173,4 +174,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
