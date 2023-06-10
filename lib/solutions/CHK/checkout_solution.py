@@ -22,6 +22,7 @@ class Discount:
     price: int
     discount_value: int = 0
     discount_meet_quantity: int = 1
+    free: list = None
 
     def apply_discount(self, num_items: int):
         """
@@ -54,6 +55,9 @@ DISCOUNT_TABLE: Dict[str, Discount] = {
     "B": Discount(price=30, discount_value=45, discount_meet_quantity=2),
     "C": Discount(price=20),
     "D": Discount(price=15),
+    "E": [
+        Discount(price=30, discount_value=45, discount_meet_quantity=2, free=['B']),
+    ],
 }
 
 
@@ -145,5 +149,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
