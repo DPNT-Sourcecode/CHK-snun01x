@@ -1,7 +1,18 @@
 import collections
 import dataclasses
 import re
-from typing import Dict
+from typing import Dict, Set
+
+
+@dataclasses.dataclass
+class Item:
+    key: str
+    quantity: int
+
+
+@dataclasses.dataclass
+class Basket:
+    items: Set[Item]
 
 
 @dataclasses.dataclass
@@ -45,7 +56,7 @@ class Discount:
         remainder = num_items % self.discount_meet_quantity
         # for default cases as n%1 = 0
         return total_discounts * self.discount_value + remainder * self.price, \
-            self.free * total_discounts
+               self.free * total_discounts
 
 
 DISCOUNT_TABLE: Dict[str, Discount] = {
@@ -150,6 +161,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
