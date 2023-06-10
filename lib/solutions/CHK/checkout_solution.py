@@ -19,10 +19,10 @@ class Discount:
 
 
 DISCOUNT_TABLE: Dict[str, Discount] = {
-    'A': Discount(price=50, discount_value=130, discount_meet_quantity=3),
-    'B': Discount(price=30, discount_value=45, discount_meet_quantity=2),
-    'C': Discount(price=20),
-    'D': Discount(price=15),
+    "A": Discount(price=50, discount_value=130, discount_meet_quantity=3),
+    "B": Discount(price=30, discount_value=45, discount_meet_quantity=2),
+    "C": Discount(price=20),
+    "D": Discount(price=15),
 }
 
 
@@ -78,9 +78,22 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
 
 
 def compute_discounts(skus) -> int:
+    """Computest the total price given the frequency of skus as a str.
+    Parameters
+    ----------
+    skus : str
+    A string containing the SKUs to be counted. Each SKU should be an uppercase
+    letter [A-Z].
+
+    Returns
+    -------
+
+    """
     combined = combine_skus_duplicates(skus)
-    combined = {key, DISCOUNT_TABLE[key].apply_discount(val)
-    for key, val in combined}
+    combined = {
+        key: DISCOUNT_TABLE[key].apply_discount(val) for key, val in combined.items()
+    }
+    return sum(combined.values())
 
 
 def checkout(skus):
@@ -108,8 +121,8 @@ def checkout(skus):
         int: total checkout value
     """
     validate_skus(skus)
-    # discounts
-    raise NotImplementedError()
+    return compute_discounts(skus)
+
 
 
 
