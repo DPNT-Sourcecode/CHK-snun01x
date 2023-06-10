@@ -164,7 +164,7 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=45
+        discount_value=1995
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
@@ -172,8 +172,7 @@ DISCOUNTS = [
         discount_value=0
     )
 ]
-DISCOUNTS.sort(
-    reverse=True)  # Now discounts are sorted in descending order of discount_value
+DISCOUNTS.sort()  # Now discounts are sorted in descending order of discount_value
 
 
 def validate_skus(skus):
@@ -234,6 +233,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
