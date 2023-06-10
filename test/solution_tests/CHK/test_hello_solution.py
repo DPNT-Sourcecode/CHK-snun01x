@@ -68,10 +68,17 @@ class TestCHK:
         # ASSERT
         assert combined == expected
 
+    @pytest.mark.parametrize(
+        "skus,expected",
+        [
+            ("A",50),
+        ],
+    )
     def test_compute_discounts(self):
         pass
 
     def test_checkout(self):
         pass
+
 
 
