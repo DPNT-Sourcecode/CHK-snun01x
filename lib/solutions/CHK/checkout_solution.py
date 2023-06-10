@@ -69,7 +69,7 @@ class Basket:
 class Discount:
     required_items: Basket
     discount_value: int
-    removed_items: Callable[[Basket], Basket]  # a function that applies the discount
+    removed_items: Basket  # a function that applies the discount
 
     def __post_init__(self):
         # Calculate the value of discount on initialization
@@ -167,9 +167,9 @@ def compute_discounts(skus: str) -> int:
 
     """
     combined = combine_skus_duplicates(skus)
-    combined = {
-        key: DISCOUNT_TABLE[key].apply_discount(val) for key, val in combined.items()
-    }
+    # combined = {
+    #     key: DISCOUNT_TABLE[key].apply_discount(val) for key, val in combined.items()
+    # }
     return sum(combined.values())
 
 
@@ -189,6 +189,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
