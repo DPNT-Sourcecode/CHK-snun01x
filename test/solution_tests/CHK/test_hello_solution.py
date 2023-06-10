@@ -21,18 +21,18 @@ def _get_sku_parametrization():
     return (
         "skus,expected",
         [
-            # ("A", Items.A.value.total_price),
-            # ("AA", Items.A.value.total_price * 2),
-            # ("AAAAA", 200),
-            # ("AAAAAAAA", 200 + 130),
-            # ("EE", 80),
-            # ("BBEE", 40 * 2 + 30),
-            # ("BBEEB", 40 * 2 + 45),
-            # ("FFF", Items.F.value.total_price * 2),
-            # ("STX", 45),
+            ("A", Items.A.value.total_price),
+            ("AA", Items.A.value.total_price * 2),
+            ("AAAAA", 200),
+            ("AAAAAAAA", 200 + 130),
+            ("EE", 80),
+            ("BBEE", 40 * 2 + 30),
+            ("BBEEB", 40 * 2 + 45),
+            ("FFF", Items.F.value.total_price * 2),
+            ("STX", 45),
             ("SSSZ", 65),
-            # ("ZZZ", 63),
-            # ("SSS", 45),
+            ("ZZZ", 45),
+            ("SSS", 45),
 
 
         ],
@@ -173,7 +173,3 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
-
-
-
-

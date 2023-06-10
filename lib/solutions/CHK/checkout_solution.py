@@ -32,17 +32,17 @@ class Discount:
         if self.choose is None:
             return
         to_remove = self.choose
-        basket_copy=basket.__copy__()
+        basket_copy = basket.__copy__()
         skus = ''
-        for item in self.required_items.items:
-            if to_remove<=0:
+        for item in sorted(self.required_items.items,reverse=True):
+            if to_remove <= 0:
                 break
-            if item in basket_copy.items and basket_copy.items[item].quantity>0:
-                can_remove=min(basket_copy.items[item].quantity,to_remove)
-                basket_copy.items[item].quantity -=can_remove
-                skus = f"{skus}{item*can_remove}"
+            if item in basket_copy.items and basket_copy.items[item].quantity > 0:
+                can_remove = min(basket_copy.items[item].quantity, to_remove)
+                basket_copy.items[item].quantity -= can_remove
+                skus = f"{skus}{item * can_remove}"
                 to_remove -= can_remove
-        if to_remove>0:
+        if to_remove > 0:
             raise TypeError("Offer not met")
         self.removed_items = Basket(skus)
 
@@ -88,6 +88,10 @@ class Item:
     def construct(self, quantity: int):
         self.quantity = quantity
         return self
+
+    def __le__(self, other):
+        return self.price < other.price
+
 
 def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     """
@@ -167,8 +171,10 @@ class Basket:
         return self
 
     def __copy__(self):
-        skus=''.join(key*val.quantity for key,val in self.items.items())
+        skus = ''.join(key * val.quantity for key, val in self.items.items())
         return Basket(skus)
+
+
 class Items(Enum):
     A = Item("A", 50)
     B = Item("B", 30)
@@ -196,7 +202,6 @@ class Items(Enum):
     X = Item("X", 17)
     Y = Item("Y", 20)
     Z = Item("Z", 21)
-
 
 
 def validate_skus(skus):
@@ -238,6 +243,8 @@ def compute_discounts(skus: str) -> int:
                 break
     return basket.value + total_discount  # Final price is the sum of the remaining
     # basket value and total discounts applied
+
+
 DISCOUNTS = [
     # | A    | 50    | 3A for 130, 5A for 200 |
     Discount(
@@ -307,7 +314,7 @@ DISCOUNTS = [
     # | R    | 50    | 3R get one Q free      |
     Discount(
         required_items=Basket("R" * 3),
-        removed_items=Basket("R" * 3+"Q"),
+        removed_items=Basket("R" * 3 + "Q"),
         discounted_price=Items.R.value.price * 3,
     ),
     # | U    | 40    | 3U get one U free      |
@@ -327,7 +334,7 @@ DISCOUNTS = [
         removed_items=Basket("V" * 3),
         discounted_price=130,
     ),
-    #| Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
+    # | Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
     Discount(
         required_items=Basket("STXYZ"),
         removed_items=Basket(""),
@@ -338,6 +345,7 @@ DISCOUNTS = [
 DISCOUNTS.sort(
     reverse=True
 )  # Now discounts are sorted in descending order of discounted_price
+
 
 def checkout(skus: str) -> int:
     """Compute skus checkout value given discounts
@@ -355,8 +363,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
-
