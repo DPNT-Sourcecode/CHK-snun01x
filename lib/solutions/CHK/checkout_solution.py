@@ -38,7 +38,7 @@ class Discount:
             if to_remove <= 0:
                 break
             if item.key in basket_copy.items and basket_copy.items[item.key].quantity > 0:
-                can_remove = min(basket_copy.items[item].quantity, to_remove)
+                can_remove = min(basket_copy.items[item.key].quantity, to_remove)
                 basket_copy.items[item.key].quantity -= can_remove
                 skus = f"{skus}{item.key * can_remove}"
                 to_remove -= can_remove
@@ -363,5 +363,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
