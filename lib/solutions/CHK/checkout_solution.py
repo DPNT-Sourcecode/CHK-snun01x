@@ -31,17 +31,18 @@ class Discount:
     def choose_items_to_remove(self, basket: Basket):
         if self.choose is None:
             return
-        if self.choose>len(basket.items):
-            raise ValueError("Basket too small for discount")
         to_remove = self.choose
-
+        basket_copy=basket.__copy__()
         skus = ''
         for item in self.required_items.items:
             if to_remove<=0:
                 break
-            if item in basket.items:
+            if item in basket_copy.items and basket_copy.items[item].quantity>0:
+                basket_copy.items[item].quantity -=1
                 skus = f"{skus}{item}"
                 to_remove -= 1
+        if to_remove>0:
+            raise TypeError("Offer not met")
         self.removed_items = Basket(skus)
 
     def apply_discount(self, basket: Basket):
@@ -164,7 +165,9 @@ class Basket:
 
         return self
 
-
+    def __copy__(self):
+        skus=''.join(key*val.quantity for key,val in self.items.items())
+        return Basket(skus)
 class Items(Enum):
     A = Item("A", 50)
     B = Item("B", 30)
@@ -351,3 +354,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
