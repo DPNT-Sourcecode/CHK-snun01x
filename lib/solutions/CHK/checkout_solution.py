@@ -1,7 +1,7 @@
 import collections
 import dataclasses
 import re
-from typing import Dict, Set
+from typing import Dict, Set, Callable
 
 
 @dataclasses.dataclass
@@ -71,7 +71,7 @@ class Discount:
                self.free * total_discounts
 
 
-DISCOUNT_TABLE: Dict[str, Discount] = {
+DISCOUNT_TABLE: Dict[int,Callable[[Basket],Basket]] = {
     "A": [
         Discount(price=50, discount_value=200, discount_meet_quantity=5),
         Discount(price=50, discount_value=130, discount_meet_quantity=3),
@@ -173,3 +173,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
