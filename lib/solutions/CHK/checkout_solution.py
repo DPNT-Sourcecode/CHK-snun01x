@@ -11,6 +11,10 @@ class Item:
     price: int
     quantity: int = None
 
+    @property
+    def total_price(self):
+        return self.quantity*self.price
+
     def construct(self, quantity: int):
         self.quantity = quantity
         return self
@@ -24,60 +28,79 @@ class Items(Enum):
     E = Item('E', 40)
 
 
-@dataclasses.dataclass
 class Basket:
-    _items: Set[Item]
+    _items: Dict[str, Item]
 
     @property
     def items(self):
         if self._items is None:
-            self._items = set()
+            self._items = {}
         return self._items
 
     def create_basket(self, skus):
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
-            self.items.add(Item(key=key,
-                                quantity=quantity))
-
+            self.items[key] = Item(key=key, quantity=quantity)
 
 @dataclasses.dataclass
 class Discount:
-    """
-    A data class representing a discount.
+    discount_basket: Basket
+    discount_value: int
+    discount_lambda: Callable[[Basket], Basket]  # a function that applies the discount
 
-    Attributes
-    ----------
-    price : int
-        The regular price of the item.
-    discount_value : int
-        The discount applied when the quantity meets the discount threshold.
-    discount_meet_quantity : int
-        The quantity threshold to meet for the discount to be applied.
-    """
-
-    original: Basket
-    discounted: Basket
+    def __post_init__(self):
+        # Calculate the value of discount on initialization
+        normal_price = sum(
+            item.total_price for item in self.discount_basket.items)
+        self.discount_value = normal_price - self.discount_value
 
     def apply_discount(self, basket: Basket):
         """
+        Applies the discount to the provided basket.
 
         Parameters
         ----------
-        basket
+        basket : Basket
+            The basket to which the discount will be applied.
 
         Returns
         -------
+        Basket
+            The basket after applying the discount.
 
+        Raises
+        ------
+        ValueError
+            If the discount cannot be applied to the basket.
         """
-#
-#
-# DISCOUNT_TABLE: List[Tuple[Discount, Callable[[Basket], Basket]]] = [
-#     Discount(
-#         original=Basket({Item('A').construct(3)}),
-#         discounted=Basket()
-#     )
-# ]
+        if self.can_apply_discount(basket):
+            return self.discount_lambda(basket)
+        else:
+            raise ValueError("Discount cannot be applied to this basket.")
+
+    def can_apply_discount(self, basket: Basket):
+        """
+        Checks if the discount can be applied to the provided basket.
+
+        Parameters
+        ----------
+        basket : Basket
+            The basket to which the discount will be applied.
+
+        Returns
+        -------
+        bool
+            True if the discount can be applied, otherwise False.
+        """
+        # Iterate over each item in the discount basket
+        for discount_key, discount_item in self.discount_basket.items.items():
+            # Try to find the corresponding item in the basket
+            basket_item = basket.items.get(discount_key)
+            # If the item is not found in the basket, or there are not enough of them, return False
+            if not basket_item or basket_item.quantity < discount_item.quantity:
+                return False
+        # If we've made it here, the basket meets the discount criteria
+
 
 
 def validate_skus(skus):
@@ -168,3 +191,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
