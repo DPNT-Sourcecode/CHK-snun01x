@@ -46,6 +46,7 @@ class Basket:
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
             self.items[key] = Item(key=key, quantity=quantity)
+        return self
 
     def __sub__(self, other: Basket):
         """Subtracts another Basket instance from this one."""
@@ -99,6 +100,30 @@ class Discount:
         return self.discount_value
 
         # If we've made it here, the basket meets the discount criteria
+
+
+DISCOUNTS = [
+    Discount(
+        required_items=Basket().create_basket("AAA"),
+        removed_items=Basket().create_basket("AAA"),
+        discount_value=130
+    ),
+    Discount(
+        required_items=Basket().create_basket("AAAAA"),
+        removed_items=Basket().create_basket("AAAAA"),
+        discount_value=200
+    ),
+    Discount(
+        required_items=Basket().create_basket("BB"),
+        removed_items=Basket().create_basket("BB"),
+        discount_value=45
+    ),
+    Discount(
+        required_items=Basket().create_basket("EE"),
+        removed_items=Basket().create_basket("B"),
+        discount_value=Items.B.value
+    )
+]
 
 
 def validate_skus(skus):
@@ -189,9 +214,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
-
-
