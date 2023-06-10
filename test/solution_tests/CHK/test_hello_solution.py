@@ -19,6 +19,7 @@ def _get_sku_parametrization():
         "skus,expected",
         [
             ("A", Items.A.value.total_price),
+            ("AA", Items.A.value.total_price*2),
         ],
     )
 
@@ -95,14 +96,14 @@ class TestDiscount:
 
     def test_discount_apply(self):
         discount_value = self.discount.apply_discount(self.basket)
-        assert discount_value == 20
+        assert discount_value == 130
         assert 'A' not in self.basket.items
 
     def test_discount_comparison(self):
         other_discount = Discount(
             required_items=Basket().create_basket("BB"),
             removed_items=Basket().create_basket("BB"),
-            discount_value=Items["B"].value.total_price * 2 - 45
+            discount_value=55
         )
         assert not self.discount <= other_discount
         assert other_discount <= self.discount
@@ -160,5 +161,6 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 
 
