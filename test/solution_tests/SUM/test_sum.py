@@ -1,6 +1,5 @@
 from typing import Any, Union
 
-import pytest
 from solutions.SUM import sum_solution
 
 
@@ -23,3 +22,4 @@ class TestSUM:
 
     def test_compute(self):
         assert sum_solution.compute(1, 2) == 3
+
