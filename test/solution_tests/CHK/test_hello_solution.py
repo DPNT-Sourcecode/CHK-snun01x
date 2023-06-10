@@ -2,12 +2,12 @@ import pytest
 from solutions.CHK.checkout_solution import (
     checkout,
 )
-from solutions.CHK.utils import (
+from solutions.CHK.checkout_solution import (
     combine_skus_duplicates,
     compute_discounts,
     validate_skus,
 )
-from solutions.CHK.models import (
+from solutions.CHK.checkout_solution import (
     Basket,
     Discount,
     Item,
@@ -98,10 +98,9 @@ class TestDiscount:
 
     def test_discount_initialization(self):
         assert isinstance(self.discount.required_items, Basket)
-        original_price = Items["A"].value.total_price * 3
         discounted_price = 130
         assert (
-            self.discount.discounted_price == original_price - discounted_price
+            self.discount.discounted_price == discounted_price
         ), self.discount.discounted_price
 
     def test_discount_apply(self):
@@ -171,5 +170,6 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 
 
