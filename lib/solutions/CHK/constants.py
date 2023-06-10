@@ -88,8 +88,13 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("V" * 3),
         discounted_price=130,
     ),
+    Discount(
+        required_items=Basket.create_basket("STXYZ",choose=3),
+        discounted_price=45
+    )
 ]
 DISCOUNTS.sort(
     reverse=True
 )  # Now discounts are sorted in descending order of discounted_price
+
 
