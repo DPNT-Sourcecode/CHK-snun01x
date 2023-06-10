@@ -12,8 +12,8 @@ class Item:
     quantity: int = None
 
     @property
-    def total_price(self):
-        return self.quantity*self.price
+    def total_price(self) -> int:
+        return self.quantity * self.price
 
     def construct(self, quantity: int):
         self.quantity = quantity
@@ -32,6 +32,10 @@ class Basket:
     _items: Dict[str, Item]
 
     @property
+    def value(self):
+        return sum([item.total_price for item in self.items.values()])
+
+    @property
     def items(self):
         if self._items is None:
             self._items = {}
@@ -41,6 +45,7 @@ class Basket:
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
             self.items[key] = Item(key=key, quantity=quantity)
+
 
 @dataclasses.dataclass
 class Discount:
@@ -96,11 +101,11 @@ class Discount:
         for discount_key, discount_item in self.discount_basket.items.items():
             # Try to find the corresponding item in the basket
             basket_item = basket.items.get(discount_key)
-            # If the item is not found in the basket, or there are not enough of them, return False
+            # If the item is not found in the basket, or there are not enough of
+            # them, return False
             if not basket_item or basket_item.quantity < discount_item.quantity:
                 return False
         # If we've made it here, the basket meets the discount criteria
-
 
 
 def validate_skus(skus):
@@ -191,4 +196,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
