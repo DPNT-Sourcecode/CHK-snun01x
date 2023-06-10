@@ -24,7 +24,7 @@ class Discount:
     discount_meet_quantity: int = 1
     free: list = None
 
-    def apply_discount(self, num_items: int):
+    def apply_discount(self, num_items: int) -> (int, str):
         """
         Apply the discount to a certain number of items.
 
@@ -44,7 +44,8 @@ class Discount:
         total_discounts = num_items // self.discount_meet_quantity
         remainder = num_items % self.discount_meet_quantity
         # for default cases as n%1 = 0
-        return total_discounts * self.discount_value + remainder * self.price
+        return total_discounts * self.discount_value + remainder * self.price, \
+            self.free * total_discounts
 
 
 DISCOUNT_TABLE: Dict[str, Discount] = {
@@ -149,6 +150,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
