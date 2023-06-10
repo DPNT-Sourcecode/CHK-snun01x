@@ -115,10 +115,11 @@ class Discount:
 
     def __post_init__(self):
         # Calculate the value of discount on initialization
-        normal_price = sum(
-            item.total_price for item in self.required_items.items.values())
-        self.discount_value = normal_price - self.discount_value
 
+        self.discount_value = self.required_items.value - self.total_discount_value
+    @property
+    def total_discount_value(self):
+        return self.discount_value+self.removed_items.value
     def apply_discount(self, basket: Basket):
         """
         Applies the discount to the provided basket.
@@ -150,22 +151,22 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discount_value=Items.A.value.total_price * 3 - 130
+        discount_value=130
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discount_value=Items.A.value.total_price * 5 - 200
+        discount_value=200
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=Items.B.value.total_price * 2 - 45
+        discount_value=45
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
-        discount_value=Items.B.value.total_price
+        discount_value=0
     )
 ]
 DISCOUNTS.sort(
@@ -230,3 +231,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
