@@ -32,7 +32,9 @@ class Discount:
         to_remove = self.choose
         skus = ''
         for item in self.required_items.items:
-            if item in basket.items and to_remove > 0:
+            if to_remove<=0:
+                break
+            if item in basket.items:
                 skus = f"{skus}{item}"
                 to_remove -= 1
         self.removed_items = Basket(skus)
@@ -151,4 +153,5 @@ class Items(Enum):
     X = Item("X", 90)
     Y = Item("Y", 10)
     Z = Item("Z", 50)
+
 

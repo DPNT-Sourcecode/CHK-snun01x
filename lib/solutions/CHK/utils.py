@@ -75,10 +75,11 @@ def compute_discounts(skus: str) -> int:
     basket = Basket(skus)
     total_discount = 0
     for discount in DISCOUNTS:
-        while True:
+        while True and len(basket.items) > 0:
             try:
                 total_discount += discount.apply_discount(basket)
             except (ValueError, TypeError):
                 break
     return basket.value + total_discount  # Final price is the sum of the remaining
     # basket value and total discounts applied
+
