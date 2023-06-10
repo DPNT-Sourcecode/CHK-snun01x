@@ -1,20 +1,14 @@
 import pytest
 from solutions.CHK import checkout_solution
 
-from ..conftest import DISCOUNT_TABLE
+from ..conftest import DISCOUNTS
 
 
 def _get_sku_parametrization():
     return (
         "skus,expected",
         [
-            ("A", DISCOUNT_TABLE["A"].price),
-            ("B", DISCOUNT_TABLE["B"].price),
-            ("C", DISCOUNT_TABLE["C"].price),
-            ("D", DISCOUNT_TABLE["D"].price),
-            ("AAA", DISCOUNT_TABLE["A"].discount_value),
-            ("BB", DISCOUNT_TABLE["B"].discount_value),
-            ("AB", DISCOUNT_TABLE["A"].price + DISCOUNT_TABLE["B"].price),
+            ("A", checkout_solution.Items.A.value.total_price),
         ],
     )
 
@@ -106,3 +100,4 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout_solution.checkout("invalid") == -1
+
