@@ -4,7 +4,7 @@ from typing import Any
 # noinspection PyShadowingBuiltins,PyUnusedLocal
 
 def _assert_int_in_range_0_100(n: Any):
-    """Check for type and range of.
+    """Check n is of type in and in range 0 -> 100
     Raises TypeError ValueError
     Parameters
     ----------
@@ -17,6 +17,8 @@ def _assert_int_in_range_0_100(n: Any):
     if not isinstance(n, int):
         raise TypeError(f'Type: {type(n)} should by of type {int}')
 
+    if not 0<=n<=100:
+        raise ValueError(f'Integer {n} Expected to be in range of 0 <= n <= 100')
 
 def compute(x: int, y: int) -> int:
     """Returns sum of two positive integers range 0 -> 100.
@@ -38,10 +40,10 @@ def compute(x: int, y: int) -> int:
     -------
 
     """
-    _assert_int_int_in_range_0_100(x)
-    _assert_int_int_in_range_0_100(y)
-
+    for v in (x,y):
+        _assert_int_in_range_0_100(v)
     return x + y
+
 
 
 
