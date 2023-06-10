@@ -5,7 +5,7 @@ import pytest
 from solutions.SUM import sum_solution
 
 
-class TestSum():
+class TestSUM:
     @pytest.mark.parametrize(
         ('n', 'error'),
         [
@@ -19,8 +19,11 @@ class TestSum():
         if error:
             with pytest.raises(error):
                 sum_solution._assert_int_in_range_0_100(n)
-        sum_solution._assert_int_in_range_0_100(n)
+        else:
+            sum_solution._assert_int_in_range_0_100(n)
+
 
     def test_compute(self):
         assert sum_solution.compute(1, 2) == 3
+
 
