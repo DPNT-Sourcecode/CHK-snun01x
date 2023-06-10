@@ -39,8 +39,8 @@ class Discount:
         int
             The total price after applying the discount.
         """
-        total_discounts = num_items % self.discount_meet_quantity
-        remainder = num_items // self.discount_meet_quantity
+        total_discounts = num_items // self.discount_meet_quantity
+        remainder = num_items % self.discount_meet_quantity
         return total_discounts * self.discount_value + remainder * self.price
 
 
@@ -148,6 +148,7 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
+
 
 
 

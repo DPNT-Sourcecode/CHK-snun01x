@@ -6,16 +6,16 @@ class TestDiscount:
     @pytest.mark.parametrize(
         "num_items,expected",
         [
-            (1, 50),  # price=50, discount_value=30, discount_meet_quantity=2
-            (2, 80),  # 2 items hit the discount threshold
-            (3, 130),  # 2 items hit the discount threshold, 1 item at regular price
-            (4, 160),  # 4 items hit the discount threshold
+            (1, 10),  # price=50, discount_value=30, discount_meet_quantity=2
+            (2, 15),  # 2 items hit the discount threshold
+            (3, 25),  # 2 items hit the discount threshold, 1 item at regular price
+            (4, 30),  # 4 items hit the discount threshold
         ],
     )
     def test_apply_discount(self, num_items, expected):
         # ARRANGE
         discount = checkout_solution.Discount(
-            price=50, discount_value=80, discount_meet_quantity=2
+            price=10, discount_value=15, discount_meet_quantity=2
         )
 
         # ACT
@@ -73,4 +73,5 @@ class TestCHK:
 
     def test_checkout(self):
         pass
+
 
