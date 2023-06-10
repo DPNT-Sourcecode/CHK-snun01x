@@ -230,11 +230,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
-
-
-
-

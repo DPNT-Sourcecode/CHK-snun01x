@@ -94,7 +94,7 @@ class TestDiscount:
     def test_discount_apply(self):
         discount_value = self.discount.apply_discount(self.basket)
         assert discount_value == 20
-        assert self.basket.items["A"].quantity == 1
+        assert 'A' not in self.basket.items
 
     def test_discount_comparison(self):
         other_discount = Discount(
@@ -158,7 +158,3 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
-
-
-
-
