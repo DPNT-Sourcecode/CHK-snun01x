@@ -2,6 +2,7 @@ import pytest
 
 
 @pytest.fixture
-def hello_world():
-    return "Hello, World!"
+def greeting_template():
+    return "Hello, {}!"
+
 
