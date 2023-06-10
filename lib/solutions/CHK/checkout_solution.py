@@ -106,21 +106,21 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discount_value=130
+        discount_value=Items.A.value*3-130
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discount_value=200
+        discount_value=Items.A.value*5-200
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=45
+        discount_value=Items.B.value*2-45
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
-        removed_items=Basket().create_basket("B"),
+        removed_items=Basket().create_basket("EEB"),
         discount_value=Items.B.value
     )
 ]
@@ -214,3 +214,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
