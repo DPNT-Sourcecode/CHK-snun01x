@@ -91,13 +91,16 @@ class Basket:
         """Subtracts another Basket instance from this one."""
         if not isinstance(other, Basket):
             raise TypeError(f"Unsupported operand type for -: {type(other)}")
-
+        # VALIDATE FIRST
         for item_key, other_item in other.items.items():
             if item_key not in self.items:
                 raise TypeError(f"{item_key} not found")
             result = self.items[item_key].quantity - other_item.quantity
             if result < 0:
                 raise ValueError("can't have negative quantity of items")
+        # APPLY
+        for item_key, other_item in other.items.items():
+            result = self.items[item_key].quantity - other_item.quantity
             self.items[item_key].quantity = result
 
             # If quantity is zero, remove the item
@@ -236,5 +239,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
