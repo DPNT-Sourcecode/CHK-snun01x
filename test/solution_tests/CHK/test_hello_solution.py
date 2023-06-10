@@ -1,16 +1,16 @@
 import pytest
 from solutions.CHK.checkout_solution import (
+    DISCOUNTS,
     Basket,
+    Discount,
     Item,
     Items,
-    Discount,
-    DISCOUNTS,
     checkout,
-    compute_discounts,
     combine_skus_duplicates,
-    validate_skus
-
+    compute_discounts,
+    validate_skus,
 )
+
 from ..conftest import DISCOUNTS
 
 
@@ -19,28 +19,29 @@ def _get_sku_parametrization():
         "skus,expected",
         [
             ("A", Items.A.value.total_price),
-            ("AA", Items.A.value.total_price*2),
+            ("AA", Items.A.value.total_price * 2),
             ("AAAAA", 200),
-            ("AAAAAAAA", 200+130),
-            ("BBEE", 40*2+30),
+            ("AAAAAAAA", 200 + 130),
+            # priority test
+            ("BBEE", 40 * 2 + 30),
+            ("BBEEB", 40 * 2 + 45),
         ],
     )
 
 
 class TestItem:
-
     def test_item_initialization(self):
-        item = Item('A', 50, 3)
-        assert item.key == 'A'
+        item = Item("A", 50, 3)
+        assert item.key == "A"
         assert item.price == 50
         assert item.quantity == 3
 
     def test_item_total_price(self):
-        item = Item('A', 50, 3)
+        item = Item("A", 50, 3)
         assert item.total_price == 150
 
     def test_item_construct(self):
-        item = Item('A', 50)
+        item = Item("A", 50)
         assert item.quantity == 1
         item.construct(3)
         assert item.quantity == 3
@@ -48,7 +49,6 @@ class TestItem:
 
 
 class TestBasket:
-
     def test_basket_initialization(self):
         basket = Basket()
         assert isinstance(basket.items, dict)
@@ -65,7 +65,8 @@ class TestBasket:
         basket = Basket()
         basket.create_basket("AAABBB")
         assert basket.value == (
-                Items["A"].value.total_price * 3 + Items["B"].value.total_price * 3)
+            Items["A"].value.total_price * 3 + Items["B"].value.total_price * 3
+        )
 
     def test_basket_subtraction(self):
         basket1 = Basket().create_basket("AAABBB")
@@ -82,31 +83,32 @@ class TestBasket:
 
 
 class TestDiscount:
-
     def setup_method(self):
         self.basket = Basket().create_basket("AAABBB")
         self.discount = Discount(
             required_items=Basket().create_basket("AAA"),
             removed_items=Basket().create_basket("AAA"),
-            discounted_price=130
+            discounted_price=130,
         )
 
     def test_discount_initialization(self):
         assert isinstance(self.discount.required_items, Basket)
-        original_price= Items["A"].value.total_price * 3
-        discounted_price=130
-        assert self.discount.discounted_price == original_price-discounted_price,self.discount.discounted_price
+        original_price = Items["A"].value.total_price * 3
+        discounted_price = 130
+        assert (
+            self.discount.discounted_price == original_price - discounted_price
+        ), self.discount.discounted_price
 
     def test_discount_apply(self):
         discounted_price = self.discount.apply_discount(self.basket)
         assert discounted_price == 130
-        assert 'A' not in self.basket.items
+        assert "A" not in self.basket.items
 
     def test_discount_comparison(self):
         other_discount = Discount(
             required_items=Basket().create_basket("BB"),
             removed_items=Basket().create_basket("BB"),
-            discounted_price=55
+            discounted_price=55,
         )
         assert not self.discount <= other_discount
         assert other_discount <= self.discount
@@ -164,4 +166,5 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 

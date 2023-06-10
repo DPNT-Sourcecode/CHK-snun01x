@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 import collections
 import dataclasses
 import functools
 import re
 from enum import Enum
-from typing import Dict, Set, Callable, Tuple, List
+from typing import Callable, Dict, List, Set, Tuple
 
 
 def combine_skus_duplicates(skus: str) -> Dict[str, int]:
@@ -59,11 +60,11 @@ class Item:
 
 
 class Items(Enum):
-    A = Item('A', 50)
-    B = Item('B', 30)
-    C = Item('C', 20)
-    D = Item('D', 15)
-    E = Item('E', 40)
+    A = Item("A", 50)
+    B = Item("B", 30)
+    C = Item("C", 20)
+    D = Item("D", 15)
+    E = Item("E", 40)
 
 
 class Basket:
@@ -75,7 +76,7 @@ class Basket:
 
     @property
     def items(self) -> Dict[str, Item]:
-        if not hasattr(self, '_items'):
+        if not hasattr(self, "_items"):
             self._items = {}
         return self._items
 
@@ -154,26 +155,27 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discounted_price=130
+        discounted_price=130,
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discounted_price=200
+        discounted_price=200,
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discounted_price=45
+        discounted_price=45,
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
-        discounted_price=Items.E.value.price * 2
-    )
+        discounted_price=Items.E.value.price * 2,
+    ),
 ]
 DISCOUNTS.sort(
-    reverse=True)  # Now discounts are sorted in descending order of discounted_price
+    reverse=True
+)  # Now discounts are sorted in descending order of discounted_price
 
 
 def validate_skus(skus):
@@ -234,4 +236,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
