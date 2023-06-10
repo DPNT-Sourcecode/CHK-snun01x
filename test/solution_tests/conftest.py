@@ -17,4 +17,3 @@ def greeting_template():
 @pytest.fixture
 def discount_table():
     return DISCOUNT_TABLE
-

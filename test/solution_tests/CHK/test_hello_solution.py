@@ -105,10 +105,3 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout_solution.checkout("invalid") == -1
-
-
-
-
-
-
-
