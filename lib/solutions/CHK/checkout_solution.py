@@ -179,7 +179,7 @@ class Items(Enum):
     H = Item("H", 10)
     I = Item("I", 35)
     J = Item("J", 60)
-    K = Item("K", 80)
+    K = Item("K", 70)
     L = Item("L", 90)
     M = Item("M", 15)
     N = Item("N", 40)
@@ -187,14 +187,14 @@ class Items(Enum):
     P = Item("P", 50)
     Q = Item("Q", 30)
     R = Item("R", 50)
-    S = Item("S", 30)
+    S = Item("S", 20)
     T = Item("T", 20)
     U = Item("U", 40)
     V = Item("V", 50)
     W = Item("W", 20)
-    X = Item("X", 90)
-    Y = Item("Y", 10)
-    Z = Item("Z", 50)
+    X = Item("X", 17)
+    Y = Item("Y", 20)
+    Z = Item("Z", 21)
 
 
 
@@ -278,12 +278,12 @@ DISCOUNTS = [
         removed_items=Basket("H" * 10),
         discounted_price=80,
     ),
-    #   | K    | 80    | 2K for 150             |
+    #   | K    | 80    | 2K for 120             |
 
     Discount(
         required_items=Basket("K" * 2),
         removed_items=Basket("K" * 2),
-        discounted_price=150,
+        discounted_price=120,
     ),
     #    | N    | 40    | 3N get one M free      |
     Discount(
@@ -354,4 +354,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 

@@ -15,7 +15,6 @@ Our price table and offers:
 | D    | 15    |                        |
 | E    | 40    | 2E get one B free      |
 | F    | 10    | 2F get one F free      |
-
 | G    | 20    |                        |
 | H    | 10    | 5H for 45, 10H for 80  |
 | I    | 35    |                        |
@@ -50,3 +49,4 @@ In order to complete the round you need to implement the following method:
 Where:
  - param[0] = a String containing the SKUs of all the products in the basket
  - @return = an Integer representing the total checkout value of the items 
+
