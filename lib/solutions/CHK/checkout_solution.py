@@ -176,7 +176,7 @@ class Discount:
 
 
 DISCOUNTS = [
-    # A
+    # | A    | 50    | 3A for 130, 5A for 200 |
     Discount(
         required_items=Basket().create_basket("A" * 3),
         removed_items=Basket().create_basket("A" * 3),
@@ -187,25 +187,25 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("A" * 5),
         discounted_price=200,
     ),
-    # B
+    # | B    | 30    | 2B for 45              |
     Discount(
         required_items=Basket().create_basket("B" * 2),
         removed_items=Basket().create_basket("B" * 2),
         discounted_price=45,
     ),
-    # E
+    # | E    | 40    | 2E get one B free      |
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
         discounted_price=Items.E.value.price * 2,
     ),
-    # F
+    # | F    | 10    | 2F get one F free      |
     Discount(
         required_items=Basket().create_basket("F" * 3),
         removed_items=Basket().create_basket("F" * 3),
         discounted_price=Items.F.value.price * 2,
     ),
-    # H 5H for 45, 10H for 80
+    #   | H    | 10    | 5H for 45, 10H for 80  |
     Discount(
         required_items=Basket().create_basket("H" * 5),
         removed_items=Basket().create_basket("H" * 5),
@@ -216,7 +216,8 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("H" * 10),
         discounted_price=80,
     ),
-    # K 2K for 150
+    #   | K    | 80    | 2K for 150             |
+
     Discount(
         required_items=Basket().create_basket("K" * 2),
         removed_items=Basket().create_basket("K" * 2),
@@ -327,6 +328,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
