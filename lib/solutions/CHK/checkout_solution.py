@@ -4,6 +4,8 @@ import collections
 import dataclasses
 import re
 from typing import Dict
+
+
 @dataclasses.dataclass
 class Discount:
     price: int
@@ -16,12 +18,13 @@ class Discount:
         return total_discounts * self.discount_value + remainder * self.price
 
 
-DISCOUNT_TABLE = {
+DISCOUNT_TABLE: Dict[str, Discount] = {
     'A': Discount(price=50, discount_value=130, discount_meet_quantity=3),
     'B': Discount(price=30, discount_value=45, discount_meet_quantity=2),
     'C': Discount(price=20),
     'D': Discount(price=15),
 }
+
 
 def validate_skus(skus):
     """Ensure skus are a valid string [A-Z]
@@ -74,15 +77,11 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     return combined
 
 
-
-
-
-
-
-
 def compute_discounts(skus) -> int:
     combined = combine_skus_duplicates(skus)
-    combin
+    combined = {key, DISCOUNT_TABLE[key].apply_discount(val)
+    for key, val in combined}
+
 
 def checkout(skus):
     """
@@ -111,5 +110,6 @@ def checkout(skus):
     validate_skus(skus)
     # discounts
     raise NotImplementedError()
+
 
 
