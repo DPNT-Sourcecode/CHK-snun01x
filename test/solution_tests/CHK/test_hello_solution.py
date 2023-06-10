@@ -1,14 +1,17 @@
 import pytest
 from solutions.CHK.checkout_solution import (
-    DISCOUNTS,
+    checkout,
+)
+from solutions.CHK.utils import (
+    combine_skus_duplicates,
+    compute_discounts,
+    validate_skus,
+)
+from solutions.CHK.models import (
     Basket,
     Discount,
     Item,
     Items,
-    checkout,
-    combine_skus_duplicates,
-    compute_discounts,
-    validate_skus,
 )
 
 from ..conftest import DISCOUNTS
@@ -169,3 +172,4 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+

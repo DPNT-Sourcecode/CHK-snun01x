@@ -82,6 +82,7 @@ class Basket:
         return self._items
 
     def create_basket(self, skus):
+        from .utils import combine_skus_duplicates
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
             item = Items[key].value
@@ -137,4 +138,5 @@ class Items(Enum):
     X = Item("X", 90)
     Y = Item("Y", 10)
     Z = Item("Z", 50)
+
 

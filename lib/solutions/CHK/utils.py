@@ -1,5 +1,3 @@
-
-
 from __future__ import annotations
 
 import collections
@@ -72,7 +70,8 @@ def compute_discounts(skus: str) -> int:
     -------
 
     """
-
+    from .models import Basket
+    from .constants import DISCOUNTS
     basket = Basket().create_basket(skus)
     total_discount = 0
     for discount in DISCOUNTS:
