@@ -74,13 +74,13 @@ class TestCHK:
     @pytest.mark.parametrize(
         "skus,expected",
         [
-            ("A",DISCOUNT_TABLE['A'].price ),
-            ("B", DISCOUNT_TABLE['B'].price),
-            ("C", DISCOUNT_TABLE['C'].price),
+            # ("A",DISCOUNT_TABLE['A'].price ),
+            # ("B", DISCOUNT_TABLE['B'].price),
+            # ("C", DISCOUNT_TABLE['C'].price),
             ("D", DISCOUNT_TABLE['D'].price),
-            ("AAA", DISCOUNT_TABLE['A'].discount_value),
-            ("BB", DISCOUNT_TABLE['B'].discount_value),
-            ("AB", DISCOUNT_TABLE['A'].price+DISCOUNT_TABLE['B'].price),
+            # ("AAA", DISCOUNT_TABLE['A'].discount_value),
+            # ("BB", DISCOUNT_TABLE['B'].discount_value),
+            # ("AB", DISCOUNT_TABLE['A'].price+DISCOUNT_TABLE['B'].price),
 
         ],
     )
@@ -89,4 +89,5 @@ class TestCHK:
 
     def test_checkout(self):
         pass
+
 

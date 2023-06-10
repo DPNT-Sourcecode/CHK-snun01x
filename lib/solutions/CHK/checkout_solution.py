@@ -41,6 +41,9 @@ class Discount:
         """
         total_discounts = num_items // self.discount_meet_quantity
         remainder = num_items % self.discount_meet_quantity
+        # for default cases as n%1 = 0
+        if remainder == 0 and total_discounts == 0:
+            remainder = 1
         return total_discounts * self.discount_value + remainder * self.price
 
 
@@ -148,3 +151,4 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
+
