@@ -88,6 +88,7 @@ DISCOUNTS = [
         removed_items=Basket("V" * 3),
         discounted_price=130,
     ),
+    #| Z    | 21    | buy any 3 of (S,T,X,Y,Z) for 45 |
     Discount(
         required_items=Basket("STXYZ"),
         removed_items=Basket(""),
@@ -98,3 +99,4 @@ DISCOUNTS = [
 DISCOUNTS.sort(
     reverse=True
 )  # Now discounts are sorted in descending order of discounted_price
+
