@@ -240,11 +240,28 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("Q" * 3),
         discounted_price=80,
     ),
-    # | Q    | 30    | 3Q for 80              |
+    # | R    | 50    | 3R get one Q free      |
     Discount(
-        required_items=Basket().create_basket("Q" * 3),
-        removed_items=Basket().create_basket("Q" * 3),
-        discounted_price=80,
+        required_items=Basket().create_basket("R" * 3),
+        removed_items=Basket().create_basket("R" * 3+"Q"),
+        discounted_price=Items.R.value.price * 3,
+    ),
+    # | U    | 40    | 3U get one U free      |
+    Discount(
+        required_items=Basket().create_basket("U" * 3),
+        removed_items=Basket().create_basket("U" * 4),
+        discounted_price=Items.U.value.price * 3,
+    ),
+    # | V    | 50    | 2V for 90, 3V for 130  |
+    Discount(
+        required_items=Basket().create_basket("V" * 2),
+        removed_items=Basket().create_basket("V" * 2),
+        discounted_price=90,
+    ),
+    Discount(
+        required_items=Basket().create_basket("V" * 3),
+        removed_items=Basket().create_basket("V" * 3),
+        discounted_price=130,
     ),
 ]
 DISCOUNTS.sort(
@@ -310,5 +327,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
