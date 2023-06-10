@@ -20,7 +20,7 @@ def validate_skus(skus):
         raise TypeError(f"Expected {skus} to match {pattern}")
 
 
-def combine_skus_duplicates(skus: str) -> Dict[str:int]:
+def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     """
     Parameters
     ----------
@@ -35,7 +35,8 @@ def combine_skus_duplicates(skus: str) -> Dict[str:int]:
         combined[sku] += 1
     return combined
 
-
+def compute_sku_counts_with_discounts(sku_counts:Dict[str, int])->int:
+    pass
 def checkout(skus):
     """
 
@@ -61,7 +62,10 @@ def checkout(skus):
         int: total checkout value
     """
     validate_skus(skus)
+    combined = combine_skus_duplicates(skus)
+    # discounts
     raise NotImplementedError()
+
 
 
 
