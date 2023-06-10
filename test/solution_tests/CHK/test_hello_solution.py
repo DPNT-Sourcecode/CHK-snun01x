@@ -3,6 +3,7 @@ from solutions.CHK import checkout_solution
 
 from ..conftest import DISCOUNT_TABLE
 
+
 def _get_sku_parametrization():
     return (
         "skus,expected",
@@ -71,7 +72,7 @@ class TestCHK:
         with pytest.raises(TypeError):
             checkout_solution.validate_skus(input_skus)
 
-    @pytest.mark.parametrize("input_skus", ["AA", "AB",""])
+    @pytest.mark.parametrize("input_skus", ["AA", "AB", ""])
     def test_validate_skus_valid(self, input_skus):
         # ARRANGE
         # ACT
@@ -105,3 +106,4 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout_solution.checkout("invalid") == -1
+

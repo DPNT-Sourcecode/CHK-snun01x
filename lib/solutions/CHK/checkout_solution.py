@@ -107,7 +107,7 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     return combined
 
 
-def compute_discounts(skus) -> int:
+def compute_discounts(skus: str) -> int:
     """Computest the total price given the frequency of skus as a str.
     Parameters
     ----------
@@ -126,32 +126,20 @@ def compute_discounts(skus) -> int:
     return sum(combined.values())
 
 
-def checkout(skus):
-    """
+def checkout(skus: str) -> int:
+    """Compute skus checkout value given discounts
 
-        Assumed input format:
-        'ABCKIEKD' where each char is in the alphabet
-        Our price table and offers:
-    +------+-------+----------------+
-    | Item | Price | Special offers |
-    +------+-------+----------------+
-    | A    | 50    | 3A for 130     |
-    | B    | 30    | 2B for 45      |
-    | C    | 20    |                |
-    | D    | 15    |                |
-    +------+-------+----------------+
+    Parameters
+    ----------
+    skus: string representing skus
 
-     - For any illegal input return -1
-        Parameters
-        ----------
-        skus
-
-        Returns
-        -------
-        int: total checkout value
+    Returns
+    -------
+    int: > 0 or -1 for error.
     """
     try:
         validate_skus(skus)
     except TypeError:
         return -1
     return compute_discounts(skus)
+
