@@ -33,7 +33,7 @@ class Discount:
     def sorted_required_items(self):
         if self._sorted_required_items is None:
             self._sorted_required_items = sorted(
-                self._sorted_required_items.items.values(), reverse=True)
+                self.required_items.items.values(), reverse=True)
         return self._sorted_required_items
 
     def choose_items_to_remove(self, basket: Basket):
@@ -373,6 +373,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
