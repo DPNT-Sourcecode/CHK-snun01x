@@ -10,6 +10,3 @@ class TestHLO:
         result = hello_solution.hello("some string")
         # ASSERT
         assert result == expected_result
-
-
-
