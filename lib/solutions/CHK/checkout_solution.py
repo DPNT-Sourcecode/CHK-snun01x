@@ -117,9 +117,12 @@ class Discount:
         # Calculate the value of discount on initialization
 
         self.discount_value = self.required_items.value - self.total_discount_value
+
     @property
     def total_discount_value(self):
-        return self.discount_value+self.removed_items.value
+        return self.discount_value + self.removed_items.value - \
+            self.required_items.value
+
     def apply_discount(self, basket: Basket):
         """
         Applies the discount to the provided basket.
@@ -231,4 +234,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
