@@ -62,6 +62,10 @@ class Discount:
     quantity: int
     value: int
 
+    def apply_discount(self, num_items: int):
+        total_discounts = num_items % self.quantity
+        remainter = self.value
+
 
 def apply_dicount(n: int, dicount: Discount):
     """
@@ -75,7 +79,7 @@ def apply_dicount(n: int, dicount: Discount):
     -------
     n % k, n // k
     """
-    return n % k, n // k
+    return, n // k
 
 
 def compute_sku_counts_with_discounts(sku_counts: Dict[str, int]) -> int:
@@ -116,10 +120,3 @@ def checkout(skus):
     combined = combine_skus_duplicates(skus)
     # discounts
     raise NotImplementedError()
-
-
-
-
-
-
-

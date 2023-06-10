@@ -47,5 +47,3 @@ class TestCHK:
 
     def test_checkout(self):
         pass
-
-
