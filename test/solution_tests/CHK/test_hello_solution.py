@@ -1,5 +1,8 @@
 import pytest
 from solutions.CHK import checkout_solution
+from ..conftest import DISCOUNT_TABLE
+
+
 
 
 class TestDiscount:
@@ -71,7 +74,12 @@ class TestCHK:
     @pytest.mark.parametrize(
         "skus,expected",
         [
-            ("A",50),
+            ("A",DISCOUNT_TABLE['A'].price ),
+            ("B", DISCOUNT_TABLE['A'].price),
+            ("C", DISCOUNT_TABLE['A'].price),
+            ("D", DISCOUNT_TABLE['A'].price),
+
+            ("AB", DISCOUNT_TABLE['A'].price+DIC),
         ],
     )
     def test_compute_discounts(self):
@@ -79,6 +87,7 @@ class TestCHK:
 
     def test_checkout(self):
         pass
+
 
 
 
