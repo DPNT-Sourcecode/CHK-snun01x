@@ -45,7 +45,7 @@ import sys
 from runner.user_input_action import get_user_input
 from runner.utils import Utils
 from solutions.ARRS import array_sum
-from solutions.CHK import checkout_solution
+from solutions.CHK import checkout_solution as checkout
 from solutions.CHL import checklite_solution
 from solutions.FIZ import fizz_buzz_solution
 from solutions.HLO import hello_solution
@@ -72,3 +72,4 @@ runner = (
 ChallengeSession.for_runner(runner).with_config(
     Utils.get_config()
 ).with_action_provider(lambda: get_user_input(sys.argv[1:])).start()
+

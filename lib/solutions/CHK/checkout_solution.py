@@ -32,7 +32,7 @@ class Discount:
         if self.choose is None:
             return
         if self.choose>len(basket.items):
-            return
+            raise ValueError("Basket too small for discount")
         to_remove = self.choose
 
         skus = ''
@@ -351,5 +351,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
