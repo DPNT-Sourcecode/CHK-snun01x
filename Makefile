@@ -102,5 +102,6 @@ run:
 	poetry run python3 examples/simple_sim.py
 
 send_command:
-	poetry run python3 lib/send_command_to_server.py $cmd
+	poetry run python3 lib/send_command_to_server.py $(cmd)
+
 
