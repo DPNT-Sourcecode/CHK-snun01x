@@ -5,7 +5,7 @@ import dataclasses
 import functools
 import re
 from enum import Enum
-from typing import Dict
+from typing import Dict, List
 
 
 @functools.total_ordering
@@ -16,6 +16,7 @@ class Discount:
     discounted_price: int
     removed_items: Basket  # a function that applies the discount
     choose: int = dataclasses.field(default=None)
+    _sorted_required_items: List[Item] = dataclasses.field(default=None)
 
     @property
     def total_discounted_price(self):
@@ -28,16 +29,24 @@ class Discount:
         """
         return self.removed_items.value - self.discounted_price
 
+    @property
+    def sorted_required_items(self):
+        if self._sorted_required_items is None:
+            self._sorted_required_items = sorted(
+                self._sorted_required_items.items.values(), reverse=True)
+        return self._sorted_required_items
+
     def choose_items_to_remove(self, basket: Basket):
         if self.choose is None:
             return
         to_remove = self.choose
         basket_copy = basket.__copy__()
         skus = ''
-        for item in sorted(self.required_items.items.values(),reverse=True):
+        for item in self.sorted_required_items:
             if to_remove <= 0:
                 break
-            if item.key in basket_copy.items and basket_copy.items[item.key].quantity > 0:
+            if item.key in basket_copy.items and basket_copy.items[
+                item.key].quantity > 0:
                 can_remove = min(basket_copy.items[item.key].quantity, to_remove)
                 basket_copy.items[item.key].quantity -= can_remove
                 skus = f"{skus}{item.key * can_remove}"
@@ -73,6 +82,7 @@ class Discount:
 
     def __le__(self, other):
         return self.total_discounted_price <= other.total_discounted_price
+
 
 @functools.total_ordering
 @dataclasses.dataclass
@@ -363,6 +373,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
