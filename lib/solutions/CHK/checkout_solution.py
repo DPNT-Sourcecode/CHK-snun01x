@@ -79,7 +79,8 @@ class Discount:
             If the discount cannot be applied to the basket.
         """
         if self.can_apply_discount(basket):
-            return self.discount_lambda(basket)
+            basket-=self.basket
+            return self.discount_value
         else:
             raise ValueError("Discount cannot be applied to this basket.")
 
@@ -196,5 +197,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
