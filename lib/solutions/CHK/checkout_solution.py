@@ -100,6 +100,8 @@ class Discount:
         return self.discount_value
 
         # If we've made it here, the basket meets the discount criteria
+    def __le__(self, other):
+        return self.discount_value <= other.discount_value
 
 
 DISCOUNTS = [
@@ -124,6 +126,7 @@ DISCOUNTS = [
         discount_value=Items.B.value.total_price
     )
 ]
+DISCOUNTS.sort(reverse=True)  # Now discounts are sorted in descending order of discount_value
 
 
 def validate_skus(skus):
@@ -191,12 +194,13 @@ def compute_discounts(skus: str) -> int:
     -------
 
     """
-    combined = combine_skus_duplicates(skus)
-    # combined = {
-    #     key: DISCOUNT_TABLE[key].apply_discount(val) for key, val in combined.items()
-    # }
-    return sum(combined.values())
 
+    basket = Basket().create_basket(skus)
+    total_discount = 0
+    for discount in DISCOUNTS:
+        while discount.is_applicable(basket):
+            total_discount += discount.apply_discount(basket)
+    return basket.value + total_discount  # Final price is the sum of the remaining basket value and total discounts
 
 def checkout(skus: str) -> int:
     """Compute skus checkout value given discounts
@@ -214,5 +218,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
