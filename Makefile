@@ -93,6 +93,9 @@ setup:
 test: validate-system-packages
 	@echo "$(CYAN)Running Tests$(COFF)"
 	poetry run pytest
+test-coverage: validate-system-packages
+	@echo "$(CYAN)Running Tests$(COFF)"
+	poetry run coverage run pytest
 
 pre-commit:
 	@echo "$(CYAN)Running pre-commit$(COFF)"
@@ -103,3 +106,4 @@ run:
 
 send_command:
 	poetry run python3 lib/send_command_to_server.py $(cmd)
+
