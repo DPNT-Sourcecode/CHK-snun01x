@@ -35,7 +35,7 @@ class Discount:
         basket_copy=basket.__copy__()
         skus = ''
         for item in self.required_items.items:
-            if to_remove<=0:
+            if to_remove<=0 or to_remove>=self.choose:
                 break
             if item in basket_copy.items and basket_copy.items[item].quantity>0:
                 basket_copy.items[item].quantity -=1
@@ -354,5 +354,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
