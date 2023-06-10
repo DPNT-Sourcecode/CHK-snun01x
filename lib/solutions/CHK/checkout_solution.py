@@ -8,11 +8,37 @@ from typing import Dict
 
 @dataclasses.dataclass
 class Discount:
+    """
+    A data class representing a discount.
+
+    Attributes
+    ----------
+    price : int
+        The regular price of the item.
+    discount_value : int
+        The discount applied when the quantity meets the discount threshold.
+    discount_meet_quantity : int
+        The quantity threshold to meet for the discount to be applied.
+    """
+
     price: int
     discount_value: int = 0
     discount_meet_quantity: int = 1
 
     def apply_discount(self, num_items: int):
+        """
+        Apply the discount to a certain number of items.
+
+        Parameters
+        ----------
+        num_items : int
+            The number of items to apply the discount to.
+
+        Returns
+        -------
+        int
+            The total price after applying the discount.
+        """
         total_discounts = num_items % self.discount_meet_quantity
         remainder = num_items // self.discount_meet_quantity
         return total_discounts * self.discount_value + remainder * self.price
@@ -122,6 +148,7 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
+
 
 
 
