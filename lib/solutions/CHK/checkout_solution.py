@@ -1,6 +1,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 import collections
+import dataclasses
 import re
 from typing import Dict
 
@@ -56,7 +57,13 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     return combined
 
 
-def get_modulo_remainder(n: int, k: int):
+@dataclasses.dataclass
+class Discount:
+    quantity: int
+    value: int
+
+
+def apply_dicount(n: int, dicount: Discount):
     """
 
     Parameters
@@ -72,6 +79,11 @@ def get_modulo_remainder(n: int, k: int):
 
 
 def compute_sku_counts_with_discounts(sku_counts: Dict[str, int]) -> int:
+    discounts = {
+        'A': Discount(3, 130),
+        'B': Discount(2, 45)
+    }
+
     return {get_modulo_remainder(n, q_to_meet_discount) for n, q_to_meet_discount in
             discounts_map.items()}
 
@@ -104,6 +116,7 @@ def checkout(skus):
     combined = combine_skus_duplicates(skus)
     # discounts
     raise NotImplementedError()
+
 
 
 
