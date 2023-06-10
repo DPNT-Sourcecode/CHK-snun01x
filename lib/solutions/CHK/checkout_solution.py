@@ -66,7 +66,26 @@ class Items(Enum):
     D = Item("D", 15)
     E = Item("E", 40)
     F = Item("F", 10)
-
+    G = Item("G",20)
+    H = Item("H",10)
+    I = Item("I",35)
+    J = Item("J",60)
+    K = Item("K",80)
+    L = Item("L",90)
+    M = Item("M",15)
+    N = Item("N",40)
+    O = Item("O",10)
+    P = Item("P",50)
+    Q = Item("Q",30)
+    R = Item("R",50)
+    S = Item("S",30)
+    T = Item("T",20)
+    U = Item("U",40)
+    V = Item("V",50)
+    W = Item("W",20)
+    X = Item("X",90)
+    Y = Item("Y",10)
+    Z = Item("Z",50)
 
 class Basket:
     _items: Dict[str, Item]
@@ -181,6 +200,11 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("FFF"),
         discounted_price=Items.F.value.price * 2,
     ),
+    Discount(
+        required_items=Basket().create_basket("FFF"),
+        removed_items=Basket().create_basket("FFF"),
+        discounted_price=Items.F.value.price * 2,
+    ),
 ]
 DISCOUNTS.sort(
     reverse=True
@@ -245,7 +269,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
