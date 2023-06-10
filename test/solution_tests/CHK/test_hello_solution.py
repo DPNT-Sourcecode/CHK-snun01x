@@ -48,7 +48,7 @@ class TestBasket:
     def test_basket_value(self):
         basket = checkout_solution.Basket()
         basket.create_basket("AAABBB")
-        assert basket.value == (checkout_solution.Items["A"].value.total_price*3 + Items["B"].value.total_price*3)
+        assert basket.value == (checkout_solution.Items["A"].value.total_price*3 + checkout_solution.Items["B"].value.total_price*3)
 
     def test_basket_subtraction(self):
         basket1 = checkout_solution.Basket().create_basket("AAABBB")
@@ -64,40 +64,32 @@ class TestBasket:
             basket1 - basket2
 
 class TestDiscount:
-    @pytest.mark.parametrize(
-        "num_items,expected",
-        [
-            (1, 10),  # price=50, discount_value=30, discount_meet_quantity=2
-            (2, 15),  # 2 items hit the discount threshold
-            (3, 25),  # 2 items hit the discount threshold, 1 item at regular price
-            (4, 30),  # 4 items hit the discount threshold
-        ],
-    )
-    def test_apply_discount(self, num_items, expected):
-        # ARRANGE
-        discount = checkout_solution.Discount(
-            price=10, discount_value=15, discount_meet_quantity=2
+
+    def setup_method(self):
+        self.basket = Basket().create_basket("AAABBB")
+        self.discount = Discount(
+            required_items=Basket().create_basket("AAA"),
+            removed_items=Basket().create_basket("AAA"),
+            discount_value=Items["A"].value.total_price*3 - 130
         )
 
-        # ACT
-        total = discount.apply_discount(num_items)
+    def test_discount_initialization(self):
+        assert isinstance(self.discount.required_items, Basket)
+        assert self.discount.discount_value == 20
 
-        # ASSERT
-        assert total == expected
+    def test_discount_apply(self):
+        discount_value = self.discount.apply_discount(self.basket)
+        assert discount_value == 20
+        assert self.basket.items["A"].quantity == 1
 
-    def test_apply_discount_no_discount(self):
-        # ARRANGE
-        price = 5
-        num_items = 10
-        discount = checkout_solution.Discount(price=price)
-
-        # ACT
-        total = discount.apply_discount(num_items)
-
-        # ASSERT
-        assert total == price * num_items
-
-
+    def test_discount_comparison(self):
+        other_discount = Discount(
+            required_items=Basket().create_basket("BB"),
+            removed_items=Basket().create_basket("BB"),
+            discount_value=Items["B"].value.total_price*2 - 45
+        )
+        assert not self.discount <= other_discount
+        assert other_discount <= self.discount
 class TestCHK:
     @pytest.mark.parametrize(
         "input_skus",
@@ -150,5 +142,6 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout_solution.checkout("invalid") == -1
+
 
 

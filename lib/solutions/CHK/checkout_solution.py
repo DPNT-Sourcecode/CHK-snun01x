@@ -74,16 +74,16 @@ class Basket:
         return sum([item.total_price for item in self.items.values()])
 
     @property
-    def items(self)-> Dict[str, Item]:
-        if not hasattr(self,'_items'):
+    def items(self) -> Dict[str, Item]:
+        if not hasattr(self, '_items'):
             self._items = {}
         return self._items
 
     def create_basket(self, skus):
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
-            item=Items[key].value
-            self.items[key] = Item(key=key, quantity=quantity,price=item.total_price)
+            item = Items[key].value
+            self.items[key] = Item(key=key, quantity=quantity, price=item.total_price)
         return self
 
     def __sub__(self, other: Basket):
@@ -94,14 +94,17 @@ class Basket:
         for item_key, other_item in other.items.items():
             if item_key not in self.items:
                 raise TypeError(f"{item_key} not found")
-            self.items[item_key].quantity -= other_item.quantity
-            if self.items[item_key].quantity < 0:
+            result = self.items[item_key].quantity - other_item.quantity
+            if result < 0:
                 raise ValueError("can't have negative quantity of items")
+            self.items[item_key].quantity = result
+
             # If quantity is zero, remove the item
             if self.items[item_key].quantity == 0:
                 del self.items[item_key]
 
         return self
+
 
 @functools.total_ordering
 @dataclasses.dataclass
@@ -138,6 +141,7 @@ class Discount:
         return self.discount_value
 
         # If we've made it here, the basket meets the discount criteria
+
     def __le__(self, other):
         return self.discount_value <= other.discount_value
 
@@ -146,17 +150,17 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discount_value=Items.A.value.total_price*3-130
+        discount_value=Items.A.value.total_price * 3 - 130
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discount_value=Items.A.value.total_price*5-200
+        discount_value=Items.A.value.total_price * 5 - 200
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=Items.B.value.total_price*2-45
+        discount_value=Items.B.value.total_price * 2 - 45
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
@@ -164,7 +168,8 @@ DISCOUNTS = [
         discount_value=Items.B.value.total_price
     )
 ]
-DISCOUNTS.sort(reverse=True)  # Now discounts are sorted in descending order of discount_value
+DISCOUNTS.sort(
+    reverse=True)  # Now discounts are sorted in descending order of discount_value
 
 
 def validate_skus(skus):
@@ -205,7 +210,10 @@ def compute_discounts(skus: str) -> int:
                 total_discount += discount.apply_discount(basket)
             except (ValueError, TypeError):
                 break
-    return basket.value + total_discount  # Final price is the sum of the remaining basket value and total discounts applied
+    return basket.value + total_discount  # Final price is the sum of the remaining
+    # basket value and total discounts applied
+
+
 def checkout(skus: str) -> int:
     """Compute skus checkout value given discounts
 
@@ -222,6 +230,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
