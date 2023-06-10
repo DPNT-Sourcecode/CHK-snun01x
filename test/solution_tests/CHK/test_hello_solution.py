@@ -75,25 +75,25 @@ class TestBasket:
         )
 
     def test_basket_subtraction(self):
-        basket1 = Basket().create_basket("AAABBB")
-        basket2 = Basket().create_basket("AAB")
+        basket1 = Basket("AAABBB")
+        basket2 = Basket("AAB")
         basket1 - basket2
         assert basket1.items["A"].quantity == 1
         assert basket1.items["B"].quantity == 2
 
     def test_basket_subtraction_error(self):
-        basket1 = Basket().create_basket("AAABBB")
-        basket2 = Basket().create_basket("AABCC")
+        basket1 = Basket("AAABBB")
+        basket2 = Basket("AABCC")
         with pytest.raises(TypeError):
             basket1 - basket2
 
 
 class TestDiscount:
     def setup_method(self):
-        self.basket = Basket().create_basket("AAABBB")
+        self.basket = Basket("AAABBB")
         self.discount = Discount(
-            required_items=Basket().create_basket("AAA"),
-            removed_items=Basket().create_basket("AAA"),
+            required_items=Basket("AAA"),
+            removed_items=Basket("AAA"),
             discounted_price=130,
         )
 
@@ -112,8 +112,8 @@ class TestDiscount:
 
     def test_discount_comparison(self):
         other_discount = Discount(
-            required_items=Basket().create_basket("BB"),
-            removed_items=Basket().create_basket("BB"),
+            required_items=Basket("BB"),
+            removed_items=Basket("BB"),
             discounted_price=55,
         )
         assert not self.discount <= other_discount
@@ -172,4 +172,5 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 

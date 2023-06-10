@@ -72,7 +72,7 @@ def compute_discounts(skus: str) -> int:
     """
     from .models import Basket
     from .constants import DISCOUNTS
-    basket = Basket().create_basket(skus)
+    basket = Basket(skus)
     total_discount = 0
     for discount in DISCOUNTS:
         while True:
@@ -82,4 +82,5 @@ def compute_discounts(skus: str) -> int:
                 break
     return basket.value + total_discount  # Final price is the sum of the remaining
     # basket value and total discounts applied
+
 

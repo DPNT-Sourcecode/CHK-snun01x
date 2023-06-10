@@ -35,7 +35,7 @@ class Discount:
             if item in basket and to_remove > 0:
                 skus = f"{skus}{item}"
                 to_remove -= 1
-        self.removed_items = Basket.create_basket(skus)
+        self.removed_items = Basket(skus)
 
     def apply_discount(self, basket: Basket):
         """
@@ -55,7 +55,9 @@ class Discount:
         ------
         ValueError,TypeError
         """
-        basket -= self.choose_items_to_remove(basket)
+        self.choose_items_to_remove(basket)
+
+        basket -= self.removed_items
         return self.discounted_price
 
         # If we've made it here, the basket meets the discount criteria
@@ -92,13 +94,12 @@ class Basket:
             self._items = {}
         return self._items
 
-    def create_basket(self, skus):
+    def __init__(self, skus):
         from .utils import combine_skus_duplicates
         combined = combine_skus_duplicates(skus)
         for key, quantity in combined.items():
             item = Items[key].value
             self.items[key] = Item(key=key, quantity=quantity, price=item.total_price)
-        return self
 
     def __sub__(self, other: Basket):
         """Subtracts another Basket instance from this one."""
@@ -150,6 +151,7 @@ class Items(Enum):
     X = Item("X", 90)
     Y = Item("Y", 10)
     Z = Item("Z", 50)
+
 
 
 

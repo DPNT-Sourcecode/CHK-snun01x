@@ -1,26 +1,25 @@
 import pytest
-from solutions.CHK import checkout_solution
-
+from solutions.CHK.models import Discount,Basket,Items
 DISCOUNTS = [
-    checkout_solution.Discount(
-        required_items=checkout_solution.Basket().create_basket("AAA"),
-        removed_items=checkout_solution.Basket().create_basket("AAA"),
-        discounted_price=checkout_solution.Items.A.value.total_price * 3 - 130,
+    Discount(
+        required_items=Basket("AAA"),
+        removed_items=Basket("AAA"),
+        discounted_price=Items.A.value.total_price * 3 - 130,
     ),
-    checkout_solution.Discount(
-        required_items=checkout_solution.Basket().create_basket("AAAAA"),
-        removed_items=checkout_solution.Basket().create_basket("AAAAA"),
-        discounted_price=checkout_solution.Items.A.value.total_price * 5 - 200,
+    Discount(
+        required_items=Basket("AAAAA"),
+        removed_items=Basket("AAAAA"),
+        discounted_price=Items.A.value.total_price * 5 - 200,
     ),
-    checkout_solution.Discount(
-        required_items=checkout_solution.Basket().create_basket("BB"),
-        removed_items=checkout_solution.Basket().create_basket("BB"),
-        discounted_price=checkout_solution.Items.B.value.total_price * 2 - 45,
+    Discount(
+        required_items=Basket("BB"),
+        removed_items=Basket("BB"),
+        discounted_price=Items.B.value.total_price * 2 - 45,
     ),
-    checkout_solution.Discount(
-        required_items=checkout_solution.Basket().create_basket("EE"),
-        removed_items=checkout_solution.Basket().create_basket("EEB"),
-        discounted_price=checkout_solution.Items.B.value.total_price,
+    Discount(
+        required_items=Basket("EE"),
+        removed_items=Basket("EEB"),
+        discounted_price=Items.B.value.total_price,
     ),
 ]
 
@@ -33,3 +32,4 @@ def greeting_template():
 @pytest.fixture
 def discount_table():
     return DISCOUNTS
+
