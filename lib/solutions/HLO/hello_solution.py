@@ -17,5 +17,3 @@ def hello(friend_name: str) -> str:
         )
     greeting_template = "Hello, {}!"
     return greeting_template.format(friend_name)
-
-

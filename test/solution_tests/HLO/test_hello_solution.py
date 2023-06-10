@@ -20,7 +20,3 @@ class TestHLO:
         # ASSERT
         with pytest.raises(TypeError):
             hello_solution.hello(name)
-
-
-
-

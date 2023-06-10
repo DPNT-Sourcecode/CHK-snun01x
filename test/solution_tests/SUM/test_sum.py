@@ -23,6 +23,3 @@ class TestSUM:
 
     def test_compute(self):
         assert sum_solution.compute(1, 2) == 3
-
-
-
