@@ -37,10 +37,10 @@ class Discount:
         for item in sorted(self.required_items.items.values(),reverse=True):
             if to_remove <= 0:
                 break
-            if item in basket_copy.items and basket_copy.items[item].quantity > 0:
+            if item.key in basket_copy.items and basket_copy.items[item.key].quantity > 0:
                 can_remove = min(basket_copy.items[item].quantity, to_remove)
-                basket_copy.items[item].quantity -= can_remove
-                skus = f"{skus}{item * can_remove}"
+                basket_copy.items[item.key].quantity -= can_remove
+                skus = f"{skus}{item.key * can_remove}"
                 to_remove -= can_remove
         if to_remove > 0:
             raise TypeError("Offer not met")
@@ -363,4 +363,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
