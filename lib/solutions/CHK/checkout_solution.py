@@ -49,14 +49,14 @@ class Basket:
 
 @dataclasses.dataclass
 class Discount:
-    discount_basket: Basket
+    required_items: Basket
     discount_value: int
-    discount_lambda: Callable[[Basket], Basket]  # a function that applies the discount
+    removed_items: Callable[[Basket], Basket]  # a function that applies the discount
 
     def __post_init__(self):
         # Calculate the value of discount on initialization
         normal_price = sum(
-            item.total_price for item in self.discount_basket.items)
+            item.total_price for item in self.required_items.items)
         self.discount_value = normal_price - self.discount_value
 
     def apply_discount(self, basket: Basket):
@@ -99,7 +99,7 @@ class Discount:
             True if the discount can be applied, otherwise False.
         """
         # Iterate over each item in the discount basket
-        for discount_key, discount_item in self.discount_basket.items.items():
+        for discount_key, discount_item in self.required_items.items.items():
             # Try to find the corresponding item in the basket
             basket_item = basket.items.get(discount_key)
             # If the item is not found in the basket, or there are not enough of
@@ -197,6 +197,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
