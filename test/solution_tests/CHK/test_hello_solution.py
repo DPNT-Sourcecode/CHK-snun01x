@@ -56,20 +56,18 @@ class TestItem:
 
 class TestBasket:
     def test_basket_initialization(self):
-        basket = Basket()
+        basket = Basket("")
         assert isinstance(basket.items, dict)
         assert basket.value == 0
 
     def test_basket_create(self):
-        basket = Basket()
-        basket.create_basket("AAABBB")
+        basket=Basket("AAABBB")
         assert len(basket.items) == 2
         assert basket.items["A"].quantity == 3
         assert basket.items["B"].quantity == 3
 
     def test_basket_value(self):
-        basket = Basket()
-        basket.create_basket("AAABBB")
+        basket=Basket("AAABBB")
         assert basket.value == (
             Items["A"].value.total_price * 3 + Items["B"].value.total_price * 3
         )
@@ -172,5 +170,3 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
-
-

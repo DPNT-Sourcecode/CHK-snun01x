@@ -82,5 +82,3 @@ def compute_discounts(skus: str) -> int:
                 break
     return basket.value + total_discount  # Final price is the sum of the remaining
     # basket value and total discounts applied
-
-
