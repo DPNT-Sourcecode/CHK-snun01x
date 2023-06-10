@@ -175,36 +175,47 @@ class Discount:
 
 
 DISCOUNTS = [
+    # A
     Discount(
-        required_items=Basket().create_basket("AAA"),
-        removed_items=Basket().create_basket("AAA"),
+        required_items=Basket().create_basket("A"*3),
+        removed_items=Basket().create_basket("A"*3),
         discounted_price=130,
     ),
     Discount(
-        required_items=Basket().create_basket("AAAAA"),
-        removed_items=Basket().create_basket("AAAAA"),
+        required_items=Basket().create_basket("A"*5),
+        removed_items=Basket().create_basket("A"*5),
         discounted_price=200,
     ),
+    # B
     Discount(
-        required_items=Basket().create_basket("BB"),
-        removed_items=Basket().create_basket("BB"),
+        required_items=Basket().create_basket("B"*2),
+        removed_items=Basket().create_basket("B"*2),
         discounted_price=45,
     ),
+    # E
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
         discounted_price=Items.E.value.price * 2,
     ),
+    # F
     Discount(
-        required_items=Basket().create_basket("FFF"),
-        removed_items=Basket().create_basket("FFF"),
+        required_items=Basket().create_basket("F"*3),
+        removed_items=Basket().create_basket("F"*3),
         discounted_price=Items.F.value.price * 2,
     ),
+    # H 5H for 45, 10H for 80
     Discount(
-        required_items=Basket().create_basket("FFF"),
-        removed_items=Basket().create_basket("FFF"),
-        discounted_price=Items.F.value.price * 2,
+        required_items=Basket().create_basket("H"*5),
+        removed_items=Basket().create_basket("H"*5),
+        discounted_price=45,
     ),
+    Discount(
+        required_items=Basket().create_basket("H" * 10),
+        removed_items=Basket().create_basket("H" * 10),
+        discounted_price=80,
+    ),
+    # K
 ]
 DISCOUNTS.sort(
     reverse=True
@@ -269,3 +280,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
