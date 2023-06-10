@@ -198,10 +198,12 @@ def compute_discounts(skus: str) -> int:
     basket = Basket().create_basket(skus)
     total_discount = 0
     for discount in DISCOUNTS:
-        while discount.is_applicable(basket):
-            total_discount += discount.apply_discount(basket)
-    return basket.value + total_discount  # Final price is the sum of the remaining basket value and total discounts
-
+        while True:
+            try:
+                total_discount += discount.apply_discount(basket)
+            except (ValueError, TypeError):
+                break
+    return basket.value + total_discount  # Final price is the sum of the remaining basket value and total discounts applied
 def checkout(skus: str) -> int:
     """Compute skus checkout value given discounts
 
@@ -218,6 +220,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
