@@ -70,14 +70,14 @@ class Discount:
         -------
 
         """
-
-
-DISCOUNT_TABLE: List[Tuple[Discount, Callable[[Basket], Basket]]] = [
-    Discount(
-        original=Basket({Item('A').construct(3)}),
-        discounted=Basket()
-    )
-]
+#
+#
+# DISCOUNT_TABLE: List[Tuple[Discount, Callable[[Basket], Basket]]] = [
+#     Discount(
+#         original=Basket({Item('A').construct(3)}),
+#         discounted=Basket()
+#     )
+# ]
 
 
 def validate_skus(skus):
@@ -168,7 +168,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
