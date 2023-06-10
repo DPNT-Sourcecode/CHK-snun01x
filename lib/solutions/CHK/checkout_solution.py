@@ -34,7 +34,7 @@ class Discount:
         to_remove = self.choose
         basket_copy = basket.__copy__()
         skus = ''
-        for item in sorted(self.required_items.items,reverse=True):
+        for item in sorted(self.required_items.items.values(),reverse=True):
             if to_remove <= 0:
                 break
             if item in basket_copy.items and basket_copy.items[item].quantity > 0:
@@ -74,7 +74,7 @@ class Discount:
     def __le__(self, other):
         return self.total_discounted_price <= other.total_discounted_price
 
-
+@functools.total_ordering
 @dataclasses.dataclass
 class Item:
     key: str
@@ -363,3 +363,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
