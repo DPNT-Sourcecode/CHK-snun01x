@@ -1,3 +1,4 @@
+from __future__ import annotations
 import collections
 import dataclasses
 import re
@@ -46,6 +47,23 @@ class Basket:
         for key, quantity in combined.items():
             self.items[key] = Item(key=key, quantity=quantity)
 
+    def __sub__(self, other: Basket):
+        """Subtracts another Basket instance from this one."""
+        if not isinstance(other, Basket):
+            raise TypeError(f"Unsupported operand type for -: {type(other)}")
+
+        for item_key, other_item in other.items.items():
+            if item_key not in self.items:
+                raise TypeError(f"{item_key} not found")
+            self.items[item_key].quantity -= other_item.quantity
+            if self.items[item_key].quantity < 0:
+                raise ValueError("can't have negative quantity of items")
+            # If quantity is zero, remove the item
+            if self.items[item_key].quantity == 0:
+                del self.items[item_key]
+
+        return self
+
 
 @dataclasses.dataclass
 class Discount:
@@ -75,37 +93,11 @@ class Discount:
 
         Raises
         ------
-        ValueError
-            If the discount cannot be applied to the basket.
+        ValueError,TypeError
         """
-        if self.can_apply_discount(basket):
-            basket-=self.basket
-            return self.discount_value
-        else:
-            raise ValueError("Discount cannot be applied to this basket.")
+        basket -= self.removed_items
+        return self.discount_value
 
-    def can_apply_discount(self, basket: Basket):
-        """
-        Checks if the discount can be applied to the provided basket.
-
-        Parameters
-        ----------
-        basket : Basket
-            The basket to which the discount will be applied.
-
-        Returns
-        -------
-        bool
-            True if the discount can be applied, otherwise False.
-        """
-        # Iterate over each item in the discount basket
-        for discount_key, discount_item in self.required_items.items.items():
-            # Try to find the corresponding item in the basket
-            basket_item = basket.items.get(discount_key)
-            # If the item is not found in the basket, or there are not enough of
-            # them, return False
-            if not basket_item or basket_item.quantity < discount_item.quantity:
-                return False
         # If we've made it here, the basket meets the discount criteria
 
 
@@ -197,6 +189,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
