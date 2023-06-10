@@ -64,6 +64,8 @@ def validate_skus(skus):
     -------
 
     """
+    if skus == "":
+        return
     pattern = "^[A-Z]+$"
     if not re.fullmatch(pattern, skus):
         raise TypeError(f"Expected {skus} to match {pattern}")
@@ -150,6 +152,7 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
+
 
 
 

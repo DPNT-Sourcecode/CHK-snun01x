@@ -63,7 +63,6 @@ class TestCHK:
             "abc",
             "A B C",
             "123",
-            "",
         ],
     )
     def test_validate_skus_invalid(self, input_skus):
@@ -73,7 +72,7 @@ class TestCHK:
         with pytest.raises(TypeError):
             checkout_solution.validate_skus(input_skus)
 
-    @pytest.mark.parametrize("input_skus", ["AA", "AB"])
+    @pytest.mark.parametrize("input_skus", ["AA", "AB",""])
     def test_validate_skus_valid(self, input_skus):
         # ARRANGE
         # ACT
@@ -104,6 +103,7 @@ class TestCHK:
     @pytest.mark.parametrize(*_get_sku_parametrization())
     def test_checkout(self, skus, expected):
         assert checkout_solution.checkout(skus) == expected
+
 
 
 
