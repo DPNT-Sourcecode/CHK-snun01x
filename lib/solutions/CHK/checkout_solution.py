@@ -60,7 +60,7 @@ class Item:
 
 class Items(Enum):
     A = Item('A', 50)
-    B = Item('B', 30)
+    B = Item('B', 1000)
     C = Item('C', 20)
     D = Item('D', 15)
     E = Item('E', 40)
@@ -234,5 +234,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
