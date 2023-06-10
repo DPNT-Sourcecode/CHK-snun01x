@@ -1,7 +1,14 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
+
+def validate_skus(skus):
+    pass
+
 def checkout(skus):
     """
+
+    Assumed input format:
+    'ABCKIEKD' where each char is in the alphabet
     Our price table and offers:
 +------+-------+----------------+
 | Item | Price | Special offers |
@@ -21,4 +28,6 @@ def checkout(skus):
     -------
     int: total checkout value
     """
+    valide_skus(skus)
     raise NotImplementedError()
+
