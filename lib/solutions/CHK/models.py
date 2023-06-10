@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import dataclasses
@@ -14,6 +13,7 @@ class Discount:
     # discounted_price = price to charge customer for discount
     discounted_price: int
     removed_items: Basket  # a function that applies the discount
+    choose: int = dataclasses.field(default=None)
 
     @property
     def total_discounted_price(self):
@@ -25,6 +25,17 @@ class Discount:
 
         """
         return self.removed_items.value - self.discounted_price
+
+    def choose_items_to_remove(self, basket: Basket):
+        if self.choose is None:
+            return
+        to_remove = self.choose
+        skus = ''
+        for item in self.required_items.items:
+            if item in basket and to_remove > 0:
+                skus = f"{skus}{item}"
+                to_remove -= 1
+        self.removed_items = Basket.create_basket(skus)
 
     def apply_discount(self, basket: Basket):
         """
@@ -44,14 +55,13 @@ class Discount:
         ------
         ValueError,TypeError
         """
-        basket -= self.removed_items
+        basket -= self.choose_items_to_remove(basket)
         return self.discounted_price
 
         # If we've made it here, the basket meets the discount criteria
 
     def __le__(self, other):
         return self.total_discounted_price <= other.total_discounted_price
-
 
 
 @dataclasses.dataclass
@@ -67,7 +77,6 @@ class Item:
     def construct(self, quantity: int):
         self.quantity = quantity
         return self
-
 
 
 class Basket:
@@ -112,6 +121,7 @@ class Basket:
                 del self.items[item_key]
 
         return self
+
 
 class Items(Enum):
     A = Item("A", 50)
