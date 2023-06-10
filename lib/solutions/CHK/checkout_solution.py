@@ -10,7 +10,7 @@ from typing import Dict, Set, Callable, Tuple, List
 class Item:
     key: str
     price: int
-    quantity: int = None
+    quantity: int = 1
 
     @property
     def total_price(self) -> int:
@@ -37,7 +37,7 @@ class Basket:
         return sum([item.total_price for item in self.items.values()])
 
     @property
-    def items(self):
+    def items(self)-> Dict[str, Item]:
         if self._items is None:
             self._items = {}
         return self._items
@@ -106,22 +106,22 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discount_value=Items.A.value*3-130
+        discount_value=Items.A.value.total_price*3-130
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discount_value=Items.A.value*5-200
+        discount_value=Items.A.value.total_price*5-200
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=Items.B.value*2-45
+        discount_value=Items.B.value.total_price*2-45
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
-        discount_value=Items.B.value
+        discount_value=Items.B.value.total_price
     )
 ]
 
@@ -214,4 +214,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
