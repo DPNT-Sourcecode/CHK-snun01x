@@ -30,9 +30,9 @@ def _get_sku_parametrization():
             # ("BBEEB", 40 * 2 + 45),
             # ("FFF", Items.F.value.total_price * 2),
             # ("STX", 45),
-            # ("SSSZ", 81),
+            ("SSSZ", 81),
             # ("ZZZ", 63),
-            ("SSS", 45),
+            # ("SSS", 45),
 
 
         ],
@@ -173,5 +173,6 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 
 
