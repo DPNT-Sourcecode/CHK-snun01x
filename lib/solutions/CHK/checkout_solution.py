@@ -17,7 +17,7 @@ def validate_skus(skus):
     """
     pattern = "^[A-Z]+$"
     if not re.fullmatch(pattern, skus):
-        raise TypeError(f'Expected {skus} to match {pattern}')
+        raise TypeError(f"Expected {skus} to match {pattern}")
 
 
 def combine_skus_duplicates(skus: str) -> Dict[str:int]:
@@ -33,33 +33,35 @@ def combine_skus_duplicates(skus: str) -> Dict[str:int]:
     combined = collections.defaultdict(int)
     for sku in skus:
         combined[sku] += 1
+    return combined
 
 
 def checkout(skus):
     """
 
-    Assumed input format:
-    'ABCKIEKD' where each char is in the alphabet
-    Our price table and offers:
-+------+-------+----------------+
-| Item | Price | Special offers |
-+------+-------+----------------+
-| A    | 50    | 3A for 130     |
-| B    | 30    | 2B for 45      |
-| C    | 20    |                |
-| D    | 15    |                |
-+------+-------+----------------+
+        Assumed input format:
+        'ABCKIEKD' where each char is in the alphabet
+        Our price table and offers:
+    +------+-------+----------------+
+    | Item | Price | Special offers |
+    +------+-------+----------------+
+    | A    | 50    | 3A for 130     |
+    | B    | 30    | 2B for 45      |
+    | C    | 20    |                |
+    | D    | 15    |                |
+    +------+-------+----------------+
 
- - For any illegal input return -1
-    Parameters
-    ----------
-    skus
+     - For any illegal input return -1
+        Parameters
+        ----------
+        skus
 
-    Returns
-    -------
-    int: total checkout value
+        Returns
+        -------
+        int: total checkout value
     """
     validate_skus(skus)
     raise NotImplementedError()
+
 
 

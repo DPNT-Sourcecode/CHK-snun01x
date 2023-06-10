@@ -1,10 +1,8 @@
 import pytest
-
 from solutions.HLO import hello_solution
 
 
 class TestHLO:
-
     def test_hello_correct_format(self, greeting_template):
         # ARRANGE
         name = "John"
@@ -20,3 +18,4 @@ class TestHLO:
         # ASSERT
         with pytest.raises(TypeError):
             hello_solution.hello(name)
+
