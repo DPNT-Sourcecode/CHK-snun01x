@@ -84,7 +84,7 @@ class TestDiscount:
         self.discount = Discount(
             required_items=Basket().create_basket("AAA"),
             removed_items=Basket().create_basket("AAA"),
-            discount_value= 130
+            discount_value=130
         )
 
     def test_discount_initialization(self):
@@ -160,4 +160,5 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 
