@@ -1,5 +1,6 @@
 import pytest
-from solutions.CHK.checkout_solution import Discount,Basket,Items
+from solutions.CHK.checkout_solution import Basket, Discount, Items
+
 DISCOUNTS = [
     Discount(
         required_items=Basket("AAA"),

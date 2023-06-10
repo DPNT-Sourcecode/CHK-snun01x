@@ -33,7 +33,8 @@ class Discount:
     def sorted_required_items(self):
         if self._sorted_required_items is None:
             self._sorted_required_items = sorted(
-                self.required_items.items.values(), reverse=True)
+                self.required_items.items.values(), reverse=True
+            )
         return self._sorted_required_items
 
     def choose_items_to_remove(self, basket: Basket):
@@ -41,12 +42,14 @@ class Discount:
             return
         to_remove = self.choose
         basket_copy = basket.__copy__()
-        skus = ''
+        skus = ""
         for item in self.sorted_required_items:
             if to_remove <= 0:
                 break
-            if item.key in basket_copy.items and basket_copy.items[
-                item.key].quantity > 0:
+            if (
+                item.key in basket_copy.items
+                and basket_copy.items[item.key].quantity > 0
+            ):
                 can_remove = min(basket_copy.items[item.key].quantity, to_remove)
                 basket_copy.items[item.key].quantity -= can_remove
                 skus = f"{skus}{item.key * can_remove}"
@@ -78,7 +81,6 @@ class Discount:
         basket -= self.removed_items
         return self.discounted_price
 
-        # If we've made it here, the basket meets the discount criteria
 
     def __le__(self, other):
         return self.total_discounted_price <= other.total_discounted_price
@@ -181,7 +183,7 @@ class Basket:
         return self
 
     def __copy__(self):
-        skus = ''.join(key * val.quantity for key, val in self.items.items())
+        skus = "".join(key * val.quantity for key, val in self.items.items())
         return Basket(skus)
 
 
@@ -194,13 +196,13 @@ class Items(Enum):
     F = Item("F", 10)
     G = Item("G", 20)
     H = Item("H", 10)
-    I = Item("I", 35)
+    I = Item("I", 35)  # noqa
     J = Item("J", 60)
     K = Item("K", 70)
     L = Item("L", 90)
     M = Item("M", 15)
     N = Item("N", 40)
-    O = Item("O", 10)
+    O = Item("O", 10)  # noqa
     P = Item("P", 50)
     Q = Item("Q", 30)
     R = Item("R", 50)
@@ -297,7 +299,6 @@ DISCOUNTS = [
         discounted_price=80,
     ),
     #   | K    | 80    | 2K for 120             |
-
     Discount(
         required_items=Basket("K" * 2),
         removed_items=Basket("K" * 2),
@@ -349,8 +350,8 @@ DISCOUNTS = [
         required_items=Basket("STXYZ"),
         removed_items=Basket(""),
         discounted_price=45,
-        choose=3
-    )
+        choose=3,
+    ),
 ]
 DISCOUNTS.sort(
     reverse=True
@@ -373,8 +374,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
-
