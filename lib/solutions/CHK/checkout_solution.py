@@ -1,6 +1,7 @@
 from __future__ import annotations
 import collections
 import dataclasses
+import functools
 import re
 from enum import Enum
 from typing import Dict, Set, Callable, Tuple, List
@@ -102,7 +103,7 @@ class Basket:
 
         return self
 
-
+@functools.total_ordering
 @dataclasses.dataclass
 class Discount:
     required_items: Basket
@@ -112,7 +113,7 @@ class Discount:
     def __post_init__(self):
         # Calculate the value of discount on initialization
         normal_price = sum(
-            item.total_price for item in self.required_items.items)
+            item.total_price for item in self.required_items.items.values())
         self.discount_value = normal_price - self.discount_value
 
     def apply_discount(self, basket: Basket):
@@ -221,6 +222,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
