@@ -79,7 +79,7 @@ class TestCHK:
             ("C", DISCOUNT_TABLE['A'].price),
             ("D", DISCOUNT_TABLE['A'].price),
 
-            ("AB", DISCOUNT_TABLE['A'].price+DIC),
+            ("AB", DISCOUNT_TABLE['A'].price),
         ],
     )
     def test_compute_discounts(self):
@@ -87,7 +87,3 @@ class TestCHK:
 
     def test_checkout(self):
         pass
-
-
-
-

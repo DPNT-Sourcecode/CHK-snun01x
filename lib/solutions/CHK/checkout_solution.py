@@ -148,9 +148,3 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
-
-
-
-
-
-
