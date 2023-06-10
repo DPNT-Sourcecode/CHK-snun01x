@@ -2,7 +2,7 @@ import collections
 import dataclasses
 import re
 from enum import Enum
-from typing import Dict, Set, Callable
+from typing import Dict, Set, Callable, Tuple, List
 
 
 @dataclasses.dataclass
@@ -10,6 +10,10 @@ class Item:
     key: str
     price: int
     quantity: int = None
+
+    def construct(self, quantity: int):
+        self.quantity = quantity
+        return self
 
 
 class Items(Enum):
@@ -52,38 +56,27 @@ class Discount:
         The quantity threshold to meet for the discount to be applied.
     """
 
-    price: int
-    discount_value: int = 0
-    discount_meet_quantity: int = 1
-    free: list = None
+    original: Basket
+    discounted: Basket
 
-    def apply_discount(self, num_items: int) -> (int, str):
+    def apply_discount(self, basket: Basket):
         """
-        Apply the discount to a certain number of items.
 
         Parameters
         ----------
-        num_items : int
-            The number of items to apply the discount to.
+        basket
 
         Returns
         -------
-        int
-            The total price after applying the discount.
+
         """
-        # default case of no discounts provided (should just be price)
-        if self.discount_meet_quantity == 1:
-            return self.price * num_items
-        total_discounts = num_items // self.discount_meet_quantity
-        remainder = num_items % self.discount_meet_quantity
-        # for default cases as n%1 = 0
-        return total_discounts * self.discount_value + remainder * self.price, \
-               self.free * total_discounts
 
 
-DISCOUNT_TABLE: List[(Dicount, Callable[[Basket], Basket])] = {
-
-}
+DISCOUNT_TABLE: List[Tuple[Discount, Callable[[Basket], Basket]]] = [
+    Discount(
+        original=Basket({Item('A')})
+    )
+]
 
 
 def validate_skus(skus):
@@ -174,5 +167,6 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
