@@ -75,15 +75,18 @@ class TestCHK:
         "skus,expected",
         [
             ("A",DISCOUNT_TABLE['A'].price ),
-            ("B", DISCOUNT_TABLE['A'].price),
-            ("C", DISCOUNT_TABLE['A'].price),
-            ("D", DISCOUNT_TABLE['A'].price),
+            ("B", DISCOUNT_TABLE['B'].price),
+            ("C", DISCOUNT_TABLE['C'].price),
+            ("D", DISCOUNT_TABLE['D'].price),
+            ("AAA", DISCOUNT_TABLE['A'].discount_value),
+            ("BB", DISCOUNT_TABLE['B'].discount_value),
+            ("AB", DISCOUNT_TABLE['A'].price+DISCOUNT_TABLE['B'].price),
 
-            ("AB", DISCOUNT_TABLE['A'].price),
         ],
     )
-    def test_compute_discounts(self):
-        pass
+    def test_compute_discounts(self,skus,expected):
+        assert checkout_solution.compute_discounts(skus)==expected
 
     def test_checkout(self):
         pass
+
