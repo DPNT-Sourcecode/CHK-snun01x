@@ -66,26 +66,27 @@ class Items(Enum):
     D = Item("D", 15)
     E = Item("E", 40)
     F = Item("F", 10)
-    G = Item("G",20)
-    H = Item("H",10)
-    I = Item("I",35)
-    J = Item("J",60)
-    K = Item("K",80)
-    L = Item("L",90)
-    M = Item("M",15)
-    N = Item("N",40)
-    O = Item("O",10)
-    P = Item("P",50)
-    Q = Item("Q",30)
-    R = Item("R",50)
-    S = Item("S",30)
-    T = Item("T",20)
-    U = Item("U",40)
-    V = Item("V",50)
-    W = Item("W",20)
-    X = Item("X",90)
-    Y = Item("Y",10)
-    Z = Item("Z",50)
+    G = Item("G", 20)
+    H = Item("H", 10)
+    I = Item("I", 35)
+    J = Item("J", 60)
+    K = Item("K", 80)
+    L = Item("L", 90)
+    M = Item("M", 15)
+    N = Item("N", 40)
+    O = Item("O", 10)
+    P = Item("P", 50)
+    Q = Item("Q", 30)
+    R = Item("R", 50)
+    S = Item("S", 30)
+    T = Item("T", 20)
+    U = Item("U", 40)
+    V = Item("V", 50)
+    W = Item("W", 20)
+    X = Item("X", 90)
+    Y = Item("Y", 10)
+    Z = Item("Z", 50)
+
 
 class Basket:
     _items: Dict[str, Item]
@@ -177,19 +178,19 @@ class Discount:
 DISCOUNTS = [
     # A
     Discount(
-        required_items=Basket().create_basket("A"*3),
-        removed_items=Basket().create_basket("A"*3),
+        required_items=Basket().create_basket("A" * 3),
+        removed_items=Basket().create_basket("A" * 3),
         discounted_price=130,
     ),
     Discount(
-        required_items=Basket().create_basket("A"*5),
-        removed_items=Basket().create_basket("A"*5),
+        required_items=Basket().create_basket("A" * 5),
+        removed_items=Basket().create_basket("A" * 5),
         discounted_price=200,
     ),
     # B
     Discount(
-        required_items=Basket().create_basket("B"*2),
-        removed_items=Basket().create_basket("B"*2),
+        required_items=Basket().create_basket("B" * 2),
+        removed_items=Basket().create_basket("B" * 2),
         discounted_price=45,
     ),
     # E
@@ -200,14 +201,14 @@ DISCOUNTS = [
     ),
     # F
     Discount(
-        required_items=Basket().create_basket("F"*3),
-        removed_items=Basket().create_basket("F"*3),
+        required_items=Basket().create_basket("F" * 3),
+        removed_items=Basket().create_basket("F" * 3),
         discounted_price=Items.F.value.price * 2,
     ),
     # H 5H for 45, 10H for 80
     Discount(
-        required_items=Basket().create_basket("H"*5),
-        removed_items=Basket().create_basket("H"*5),
+        required_items=Basket().create_basket("H" * 5),
+        removed_items=Basket().create_basket("H" * 5),
         discounted_price=45,
     ),
     Discount(
@@ -215,7 +216,36 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("H" * 10),
         discounted_price=80,
     ),
-    # K
+    # K 2K for 150
+    Discount(
+        required_items=Basket().create_basket("K" * 2),
+        removed_items=Basket().create_basket("K" * 2),
+        discounted_price=150,
+    ),
+    #    | N    | 40    | 3N get one M free      |
+    Discount(
+        required_items=Basket().create_basket("N" * 3),
+        removed_items=Basket().create_basket("N" * 3 + "M"),
+        discounted_price=Items.N.value.price * 3,
+    ),
+    #     | P    | 50    | 5P for 200             |
+    Discount(
+        required_items=Basket().create_basket("P" * 5),
+        removed_items=Basket().create_basket("P" * 5),
+        discounted_price=200,
+    ),
+    # | Q    | 30    | 3Q for 80              |
+    Discount(
+        required_items=Basket().create_basket("Q" * 3),
+        removed_items=Basket().create_basket("Q" * 3),
+        discounted_price=80,
+    ),
+    # | Q    | 30    | 3Q for 80              |
+    Discount(
+        required_items=Basket().create_basket("Q" * 3),
+        removed_items=Basket().create_basket("Q" * 3),
+        discounted_price=80,
+    ),
 ]
 DISCOUNTS.sort(
     reverse=True
@@ -280,4 +310,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
