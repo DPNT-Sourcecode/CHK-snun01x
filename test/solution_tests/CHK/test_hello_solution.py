@@ -1,22 +1,11 @@
 import pytest
 
-from solutions.HLO import hello_solution
+from solutions.CHK import checkout_solution
 
+class TestCHK:
 
-class TestHLO:
+    def test_validate_skus(self):
+        pass
 
-    def test_hello_correct_format(self, greeting_template):
-        # ARRANGE
-        name = "John"
-        # ACT
-        result = hello_solution.hello(name)
-        # ASSERT
-        assert result == greeting_template.format(name)
-
-    def test_hello_raises_type_error(self, greeting_template):
-        # ARRANGE
-        name = 42
-        # ACT
-        # ASSERT
-        with pytest.raises(TypeError):
-            hello_solution.hello(name)
+    def test_checkout(self):
+        pass

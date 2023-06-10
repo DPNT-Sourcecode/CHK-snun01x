@@ -1,8 +1,19 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
-
+import re
 def validate_skus(skus):
-    pass
+    """Ensure skus are a valid string [A-Z]
+    Parameters
+    ----------
+    skus
+
+    Returns
+    -------
+
+    """
+    pattern = "^[A-Z]+$"
+    if not re.fullmatch(pattern, skus):
+        raise TypeError(f'Expected {skus} to match {pattern}')
 
 def checkout(skus):
     """
