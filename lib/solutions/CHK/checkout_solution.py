@@ -47,7 +47,10 @@ class Discount:
 
 
 DISCOUNT_TABLE: Dict[str, Discount] = {
-    "A": Discount(price=50, discount_value=130, discount_meet_quantity=3),
+    "A": [
+        Discount(price=50, discount_value=200, discount_meet_quantity=5),
+        Discount(price=50, discount_value=130, discount_meet_quantity=3),
+    ],
     "B": Discount(price=30, discount_value=45, discount_meet_quantity=2),
     "C": Discount(price=20),
     "D": Discount(price=15),
@@ -142,4 +145,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
