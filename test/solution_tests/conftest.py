@@ -1,5 +1,5 @@
 import pytest
-from solutions.CHK.models import Discount,Basket,Items
+from solutions.CHK.checkout_solution import Discount,Basket,Items
 DISCOUNTS = [
     Discount(
         required_items=Basket("AAA"),
@@ -32,3 +32,4 @@ def greeting_template():
 @pytest.fixture
 def discount_table():
     return DISCOUNTS
+

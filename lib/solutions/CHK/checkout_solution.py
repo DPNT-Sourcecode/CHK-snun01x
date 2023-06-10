@@ -31,7 +31,10 @@ class Discount:
     def choose_items_to_remove(self, basket: Basket):
         if self.choose is None:
             return
+        if self.choose>len(basket.items):
+            return
         to_remove = self.choose
+
         skus = ''
         for item in self.required_items.items:
             if to_remove<=0:
@@ -348,4 +351,5 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
