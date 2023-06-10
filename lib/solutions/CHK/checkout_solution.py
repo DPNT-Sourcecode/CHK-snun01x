@@ -65,6 +65,7 @@ class Items(Enum):
     C = Item("C", 20)
     D = Item("D", 15)
     E = Item("E", 40)
+    F = Item("F", 10)
 
 
 class Basket:
@@ -175,6 +176,11 @@ DISCOUNTS = [
         removed_items=Basket().create_basket("EEB"),
         discounted_price=Items.E.value.price * 2,
     ),
+    Discount(
+        required_items=Basket().create_basket("FFF"),
+        removed_items=Basket().create_basket("FFF"),
+        discounted_price=Items.F.value.price * 2,
+    ),
 ]
 DISCOUNTS.sort(
     reverse=True
@@ -239,6 +245,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
