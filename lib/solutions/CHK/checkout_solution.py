@@ -60,7 +60,7 @@ class Item:
 
 class Items(Enum):
     A = Item('A', 50)
-    B = Item('B', 1000)
+    B = Item('B', 30)
     C = Item('C', 20)
     D = Item('D', 15)
     E = Item('E', 40)
@@ -110,28 +110,18 @@ class Basket:
 @dataclasses.dataclass
 class Discount:
     required_items: Basket
+    # discounted_price = price to charge customer for discount
     discounted_price: int
     removed_items: Basket  # a function that applies the discount
-
-    def __post_init__(self):
-        # Calculate the value of discount on initialization
-        """
-        discounted_price is the
-        Returns
-        -------
-
-        """
-        self.discounted_price = self.required_items.value - self.total_discounted_price
 
     @property
     def total_discounted_price(self):
         """
         Returns
         -------
-
+        Real cost to supermarket (value of removed_items - discounted price)
         """
-        return self.discounted_price + self.removed_items.value - \
-            self.required_items.value
+        return self.removed_items.value - self.discounted_price
 
     def apply_discount(self, basket: Basket):
         """
@@ -152,12 +142,12 @@ class Discount:
         ValueError,TypeError
         """
         basket -= self.removed_items
-        return self.removed_items.value - self.discounted_price
+        return self.discounted_price
 
         # If we've made it here, the basket meets the discount criteria
 
     def __le__(self, other):
-        return self.discounted_price <= other.discounted_price
+        return self.total_discounted_price <= other.total_discounted_price
 
 
 DISCOUNTS = [
@@ -174,15 +164,16 @@ DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discounted_price=1995
+        discounted_price=45
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
-        discounted_price=0
+        discounted_price=Items.E.value.price * 2
     )
 ]
-DISCOUNTS.sort()  # Now discounts are sorted in descending order of discounted_price
+DISCOUNTS.sort(
+    reverse=True)  # Now discounts are sorted in descending order of discounted_price
 
 
 def validate_skus(skus):
@@ -243,3 +234,4 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
