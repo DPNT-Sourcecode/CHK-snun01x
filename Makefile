@@ -95,7 +95,8 @@ test: validate-system-packages
 	poetry run pytest
 test-coverage: validate-system-packages
 	@echo "$(CYAN)Running Tests$(COFF)"
-	poetry run coverage run pytest
+	poetry run pytest --cov=lib/solutions --cov-report term
+
 
 pre-commit:
 	@echo "$(CYAN)Running pre-commit$(COFF)"
@@ -106,4 +107,5 @@ run:
 
 send_command:
 	poetry run python3 lib/send_command_to_server.py $(cmd)
+
 
