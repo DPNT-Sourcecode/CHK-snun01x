@@ -110,17 +110,27 @@ class Basket:
 @dataclasses.dataclass
 class Discount:
     required_items: Basket
-    discount_value: int
+    discounted_price: int
     removed_items: Basket  # a function that applies the discount
 
     def __post_init__(self):
         # Calculate the value of discount on initialization
+        """
+        discounted_price is the
+        Returns
+        -------
 
-        self.discount_value = self.required_items.value - self.total_discount_value
+        """
+        self.discounted_price = self.required_items.value - self.total_discounted_price
 
     @property
-    def total_discount_value(self):
-        return self.discount_value + self.removed_items.value - \
+    def total_discounted_price(self):
+        """
+        Returns
+        -------
+
+        """
+        return self.discounted_price + self.removed_items.value - \
             self.required_items.value
 
     def apply_discount(self, basket: Basket):
@@ -142,37 +152,37 @@ class Discount:
         ValueError,TypeError
         """
         basket -= self.removed_items
-        return self.removed_items.value - self.discount_value
+        return self.removed_items.value - self.discounted_price
 
         # If we've made it here, the basket meets the discount criteria
 
     def __le__(self, other):
-        return self.discount_value <= other.discount_value
+        return self.discounted_price <= other.discounted_price
 
 
 DISCOUNTS = [
     Discount(
         required_items=Basket().create_basket("AAA"),
         removed_items=Basket().create_basket("AAA"),
-        discount_value=130
+        discounted_price=130
     ),
     Discount(
         required_items=Basket().create_basket("AAAAA"),
         removed_items=Basket().create_basket("AAAAA"),
-        discount_value=200
+        discounted_price=200
     ),
     Discount(
         required_items=Basket().create_basket("BB"),
         removed_items=Basket().create_basket("BB"),
-        discount_value=1995
+        discounted_price=1995
     ),
     Discount(
         required_items=Basket().create_basket("EE"),
         removed_items=Basket().create_basket("EEB"),
-        discount_value=0
+        discounted_price=0
     )
 ]
-DISCOUNTS.sort()  # Now discounts are sorted in descending order of discount_value
+DISCOUNTS.sort()  # Now discounts are sorted in descending order of discounted_price
 
 
 def validate_skus(skus):
@@ -233,6 +243,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 

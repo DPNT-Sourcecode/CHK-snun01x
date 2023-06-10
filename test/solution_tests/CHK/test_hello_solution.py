@@ -88,25 +88,25 @@ class TestDiscount:
         self.discount = Discount(
             required_items=Basket().create_basket("AAA"),
             removed_items=Basket().create_basket("AAA"),
-            discount_value=130
+            discounted_price=130
         )
 
     def test_discount_initialization(self):
         assert isinstance(self.discount.required_items, Basket)
         original_price= Items["A"].value.total_price * 3
         discounted_price=130
-        assert self.discount.discount_value == original_price-discounted_price,self.discount.discount_value
+        assert self.discount.discounted_price == original_price-discounted_price,self.discount.discounted_price
 
     def test_discount_apply(self):
-        discount_value = self.discount.apply_discount(self.basket)
-        assert discount_value == 130
+        discounted_price = self.discount.apply_discount(self.basket)
+        assert discounted_price == 130
         assert 'A' not in self.basket.items
 
     def test_discount_comparison(self):
         other_discount = Discount(
             required_items=Basket().create_basket("BB"),
             removed_items=Basket().create_basket("BB"),
-            discount_value=55
+            discounted_price=55
         )
         assert not self.discount <= other_discount
         assert other_discount <= self.discount
@@ -164,6 +164,7 @@ class TestCHK:
 
     def test_checkout_err(self):
         assert checkout("invalid") == -1
+
 
 
 
