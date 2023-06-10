@@ -150,8 +150,12 @@ def checkout(skus):
         -------
         int: total checkout value
     """
-    validate_skus(skus)
+    try:
+        validate_skus(skus)
+    except TypeError:
+        return -1
     return compute_discounts(skus)
+
 
 
 
