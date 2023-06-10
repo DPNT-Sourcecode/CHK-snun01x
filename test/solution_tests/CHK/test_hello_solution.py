@@ -1,8 +1,7 @@
 import pytest
 from solutions.CHK import checkout_solution
+
 from ..conftest import DISCOUNT_TABLE
-
-
 
 
 class TestDiscount:
@@ -26,6 +25,18 @@ class TestDiscount:
 
         # ASSERT
         assert total == expected
+
+    def test_apply_discount_no_discount(self):
+        # ARRANGE
+        price = 5
+        num_items = 10
+        discount = checkout_solution.Discount(price=price)
+
+        # ACT
+        total = discount.apply_discount(num_items)
+
+        # ASSERT
+        assert total == price * num_items
 
 
 class TestCHK:
@@ -74,21 +85,21 @@ class TestCHK:
     @pytest.mark.parametrize(
         "skus,expected",
         [
-            ("A",DISCOUNT_TABLE['A'].price ),
-            ("B", DISCOUNT_TABLE['B'].price),
-            ("C", DISCOUNT_TABLE['C'].price),
-            ("D", DISCOUNT_TABLE['D'].price),
-            ("AAA", DISCOUNT_TABLE['A'].discount_value),
-            ("BB", DISCOUNT_TABLE['B'].discount_value),
-            ("AB", DISCOUNT_TABLE['A'].price+DISCOUNT_TABLE['B'].price),
-
+            ("A", DISCOUNT_TABLE["A"].price),
+            ("B", DISCOUNT_TABLE["B"].price),
+            ("C", DISCOUNT_TABLE["C"].price),
+            ("D", DISCOUNT_TABLE["D"].price),
+            ("AAA", DISCOUNT_TABLE["A"].discount_value),
+            ("BB", DISCOUNT_TABLE["B"].discount_value),
+            ("AB", DISCOUNT_TABLE["A"].price + DISCOUNT_TABLE["B"].price),
         ],
     )
-    def test_compute_discounts(self,skus,expected):
-        assert checkout_solution.compute_discounts(skus)==expected
+    def test_compute_discounts(self, skus, expected):
+        assert checkout_solution.compute_discounts(skus) == expected
 
     def test_checkout(self):
         pass
+
 
 
 

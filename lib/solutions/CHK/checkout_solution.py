@@ -1,5 +1,3 @@
-# noinspection PyUnusedLocal
-# skus = unicode string
 import collections
 import dataclasses
 import re
@@ -152,5 +150,6 @@ def checkout(skus):
     """
     validate_skus(skus)
     return compute_discounts(skus)
+
 
 
