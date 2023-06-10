@@ -138,7 +138,7 @@ class Discount:
         ValueError,TypeError
         """
         basket -= self.removed_items
-        return self.discount_value
+        return self.removed_items.value - self.discount_value
 
         # If we've made it here, the basket meets the discount criteria
 
@@ -230,6 +230,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
