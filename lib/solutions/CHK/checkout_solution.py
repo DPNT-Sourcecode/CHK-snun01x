@@ -12,7 +12,19 @@ class Item:
 
 @dataclasses.dataclass
 class Basket:
-    items: Set[Item]
+    _items: Set[Item]
+
+    @property
+    def items(self):
+        if self._items is None:
+            self._items = set()
+        return self._items
+
+    def create_basket(self, skus):
+        combined = combine_skus_duplicates(skus)
+        for key, quantity in combined.items():
+            self.items.add(Item(key=key,
+                                quantity=quantity))
 
 
 @dataclasses.dataclass
@@ -161,8 +173,3 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
-
-
-
-
-
