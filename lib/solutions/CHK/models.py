@@ -21,6 +21,8 @@ class Discount:
         Returns
         -------
         Real cost to supermarket (value of removed_items - discounted price)
+
+
         """
         return self.removed_items.value - self.discounted_price
 
@@ -138,5 +140,6 @@ class Items(Enum):
     X = Item("X", 90)
     Y = Item("Y", 10)
     Z = Item("Z", 50)
+
 
 
