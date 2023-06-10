@@ -1,0 +1,26 @@
+SUM_R1
+ROUND 1 - Add two numbers
+
+Use this small challenge to understand how the system works.
+
+The challenge system is designed to simulate the normal development cycle:
+ - you write the code using your laptop and IDE
+ - you design your own tests based on the received requirements
+ - once ready, you make your software available
+
+When you run "deploy to production", the code will start receiving requests as if they are coming from "real" users.
+The code never leaves your laptop, the requests are being sent to your implementation.
+At the console you will observe requests being received and responded to.
+
+Your responses are only validated when you type "deploy" on the Server console.
+Treat the Server console like your production environment.
+
+For your convenience, a test framework has already been configured for this project.
+
+In order to complete the round you need to implement the following method:
+     sum(Integer, Integer) -> Integer
+
+Where:
+ - param[0] = a positive integer between 0-100
+ - param[1] = a positive integer between 0-100
+ - @return = an Integer representing the sum of the two numbers

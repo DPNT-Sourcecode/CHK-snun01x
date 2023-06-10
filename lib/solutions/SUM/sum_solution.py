@@ -44,8 +44,3 @@ def compute(x: int, y: int) -> int:
     for v in (x, y):
         _assert_int_in_range_0_100(v)
     return x + y
-
-
-
-
-
