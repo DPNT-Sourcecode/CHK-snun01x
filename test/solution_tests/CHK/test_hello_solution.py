@@ -4,6 +4,21 @@ from solutions.CHK import checkout_solution
 from ..conftest import DISCOUNT_TABLE
 
 
+def _get_sku_parametrization():
+    return (
+        "skus,expected",
+        [
+            ("A", DISCOUNT_TABLE["A"].price),
+            ("B", DISCOUNT_TABLE["B"].price),
+            ("C", DISCOUNT_TABLE["C"].price),
+            ("D", DISCOUNT_TABLE["D"].price),
+            ("AAA", DISCOUNT_TABLE["A"].discount_value),
+            ("BB", DISCOUNT_TABLE["B"].discount_value),
+            ("AB", DISCOUNT_TABLE["A"].price + DISCOUNT_TABLE["B"].price),
+        ],
+    )
+
+
 class TestDiscount:
     @pytest.mark.parametrize(
         "num_items,expected",
@@ -82,23 +97,14 @@ class TestCHK:
         # ASSERT
         assert combined == expected
 
-    @pytest.mark.parametrize(
-        "skus,expected",
-        [
-            ("A", DISCOUNT_TABLE["A"].price),
-            ("B", DISCOUNT_TABLE["B"].price),
-            ("C", DISCOUNT_TABLE["C"].price),
-            ("D", DISCOUNT_TABLE["D"].price),
-            ("AAA", DISCOUNT_TABLE["A"].discount_value),
-            ("BB", DISCOUNT_TABLE["B"].discount_value),
-            ("AB", DISCOUNT_TABLE["A"].price + DISCOUNT_TABLE["B"].price),
-        ],
-    )
+    @pytest.mark.parametrize(*_get_sku_parametrization())
     def test_compute_discounts(self, skus, expected):
         assert checkout_solution.compute_discounts(skus) == expected
 
-    def test_checkout(self):
-        pass
+    @pytest.mark.parametrize(*_get_sku_parametrization())
+    def test_checkout(self, skus, expected):
+        assert checkout_solution.checkout(skus) == expected
+
 
 
 
