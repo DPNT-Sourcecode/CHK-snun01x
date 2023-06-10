@@ -57,11 +57,23 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
 
 
 def get_modulo_remainder(n: int, k: int):
+    """
+
+    Parameters
+    ----------
+    n
+    k: divisor
+
+    Returns
+    -------
+    n % k, n // k
+    """
     return n % k, n // k
 
 
 def compute_sku_counts_with_discounts(sku_counts: Dict[str, int]) -> int:
-    pass
+    return {get_modulo_remainder(n, q_to_meet_discount) for n, q_to_meet_discount in
+            discounts_map.items()}
 
 
 def checkout(skus):
@@ -92,6 +104,7 @@ def checkout(skus):
     combined = combine_skus_duplicates(skus)
     # discounts
     raise NotImplementedError()
+
 
 
 
