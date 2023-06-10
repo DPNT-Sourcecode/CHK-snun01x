@@ -3,7 +3,6 @@ from solutions.CHK import checkout_solution
 
 from ..conftest import DISCOUNT_TABLE
 
-
 def _get_sku_parametrization():
     return (
         "skus,expected",
@@ -103,6 +102,10 @@ class TestCHK:
     @pytest.mark.parametrize(*_get_sku_parametrization())
     def test_checkout(self, skus, expected):
         assert checkout_solution.checkout(skus) == expected
+
+    def test_checkout_err(self):
+        assert checkout_solution.checkout("invalid") == -1
+
 
 
 
