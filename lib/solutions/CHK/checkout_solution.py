@@ -4,7 +4,24 @@ import collections
 import dataclasses
 import re
 from typing import Dict
+@dataclasses.dataclass
+class Discount:
+    price: int
+    discount_value: int = 0
+    discount_meet_quantity: int = 1
 
+    def apply_discount(self, num_items: int):
+        total_discounts = num_items % self.discount_meet_quantity
+        remainder = num_items // self.discount_meet_quantity
+        return total_discounts * self.discount_value + remainder * self.price
+
+
+DISCOUNT_TABLE = {
+    'A': Discount(price=50, discount_value=130, discount_meet_quantity=3),
+    'B': Discount(price=30, discount_value=45, discount_meet_quantity=2),
+    'C': Discount(price=20),
+    'D': Discount(price=15),
+}
 
 def validate_skus(skus):
     """Ensure skus are a valid string [A-Z]
@@ -57,45 +74,15 @@ def combine_skus_duplicates(skus: str) -> Dict[str, int]:
     return combined
 
 
-@dataclasses.dataclass
-class Discount:
-    price: int
-    discount_value: int = 0
-    discount_meet_quantity: int = 1
-
-    def apply_discount(self, num_items: int):
-        total_discounts = num_items % self.discount_meet_quantity
-        remainder = num_items // self.discount_meet_quantity
-        return total_discounts * self.discount_value + remainder * self.price
 
 
-DISCOUNT_TABLE = {
-    'A': Discount(price=50, discount_value=130, discount_meet_quantity=3),
-    'B': Discount(price=30, discount_value=45, discount_meet_quantity=2),
-    'C': Discount(price=20),
-    'D': Discount(price=15),
-}
 
 
-def apply_dicount(n: int, dicount: Discount):
-    """
-
-    Parameters
-    ----------
-    n
-    k: divisor
-
-    Returns
-    -------
-    n % k, n // k
-    """
-    return, n // k
 
 
-def compute_sku_counts_with_discounts(sku_counts: Dict[str, int]) -> int:
-    return {get_modulo_remainder(n, q_to_meet_discount) for n, q_to_meet_discount in
-            discounts_map.items()}
-
+def compute_discounts(skus) -> int:
+    combined = combine_skus_duplicates(skus)
+    combin
 
 def checkout(skus):
     """
@@ -122,7 +109,7 @@ def checkout(skus):
         int: total checkout value
     """
     validate_skus(skus)
-    combined = combine_skus_duplicates(skus)
     # discounts
     raise NotImplementedError()
+
 
