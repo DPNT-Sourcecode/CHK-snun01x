@@ -103,5 +103,3 @@ run:
 
 send_command:
 	poetry run python3 lib/send_command_to_server.py $(cmd)
-
-

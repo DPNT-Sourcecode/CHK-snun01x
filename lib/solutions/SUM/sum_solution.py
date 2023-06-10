@@ -4,7 +4,7 @@ from typing import Any
 
 
 def _assert_int_in_range_0_100(n: Any):
-    """Check n is of type in and in range 0 -> 100
+    """Check n is of type int and in range 0 -> 100
     Raises TypeError ValueError
     Parameters
     ----------
