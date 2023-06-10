@@ -74,7 +74,8 @@ class Discount:
 
 DISCOUNT_TABLE: List[Tuple[Discount, Callable[[Basket], Basket]]] = [
     Discount(
-        original=Basket({Item('A')})
+        original=Basket({Item('A').construct(3)}),
+        discounted=Basket()
     )
 ]
 
@@ -167,6 +168,7 @@ def checkout(skus: str) -> int:
     except TypeError:
         return -1
     return compute_discounts(skus)
+
 
 
 
