@@ -1,0 +1,18 @@
+HLO_R2
+ROUND 2 - Hello friend
+
+This is the last round of the warmup.
+Once you complete it, you should be able to start the official challenge.
+
+You are given the name of a friend. Say hello to them!
+Example: if name of friend is "John" than return "Hello, John!".
+
+Notes: 
+ - Use the provided parameter.
+
+In order to complete the round you need to implement the following method:
+     hello(String) -> String
+
+Where:
+ - param[0] = a String containing a name
+ - @return = a String containing a message

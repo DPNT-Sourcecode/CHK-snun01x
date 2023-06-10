@@ -1,4 +1,3 @@
-import pytest
 from solutions.HLO import hello_solution
 
 
@@ -10,3 +9,4 @@ class TestHLO:
         result = hello_solution.hello("some string")
         # ASSERT
         assert result == expected_result
+
